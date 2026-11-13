@@ -122,6 +122,7 @@ select{font:inherit;color:var(--tx);background:var(--in);border:0;border-radius:
 .hr2 label{display:flex;gap:6px;align-items:center}
 #rzGreet .gdesc{margin-top:4px;font-size:12.5px;line-height:1.3;overflow-wrap:anywhere}
 #rzGreet .gwrap{gap:12px}
+#rzGreet .gn{display:block;min-width:0}#rzGreet .gn b{overflow-wrap:break-word;word-break:normal;hyphens:auto;line-height:1.15;display:inline}#rzGreet .gn .wv{font-size:20px}#rzGreet .g1{min-width:0}
 </style>
 <style>
 .rz-locked main,.rz-locked #pdfView{display:none!important}
@@ -1873,6 +1874,7 @@ function avCrop(file) { return new Promise(res => {
   }; im.src = fr.result; }; fr.readAsDataURL(file); }); }
 function avResize(file) { return new Promise((res, rej) => { const fr = new FileReader(); fr.onerror = () => rej(); fr.onload = () => { const im = new Image(); im.onerror = () => rej(); im.onload = () => { const n = 192, c = document.createElement("canvas"); c.width = c.height = n; const x = c.getContext("2d"), m = Math.min(im.width, im.height), sx = (im.width - m) / 2, sy = (im.height - m) / 2; x.fillStyle = "#fff"; x.fillRect(0, 0, n, n); x.drawImage(im, sx, sy, m, m, 0, 0, n, n); res(c.toDataURL("image/jpeg", .82)); }; im.src = fr.result; }; fr.readAsDataURL(file); }); }
 const logout = () => { raw.del(SK); location.reload(); };
+const nmFs = n => { const l = [...String(n || "")].length; return l <= 9 ? 30 : l <= 12 ? 26 : l <= 16 ? 22 : l <= 22 ? 19 : 16; };
 const wish = () => { const h = new Date().getHours(); return h >= 5 && h < 12 ? "Selamat pagi" : h >= 12 && h < 15 ? "Selamat tengah hari" : h >= 15 && h < 19 ? "Selamat petang" : "Selamat malam"; };
 
 /* ================= SKRIN LOGIN ================= */
@@ -1937,7 +1939,7 @@ function boot() {
     const u = cur() || CU;
     const sig = (u.desc || "") + (u.av ? u.av.t + (u.av.e || "") + (u.av.c || "") + (u.av.d ? u.av.d.length : "") : "") + u.name + (u.pangkat || "") + wish();
     if (g.dataset.sig !== sig) { g.dataset.sig = sig;
-    g.innerHTML = `<div class="gwrap"><span data-act="nav_profile" role="button" aria-label="Profil">${avHTML(u, 74)}</span><div style="flex:1;min-width:0"><div class="g1"><span class="gw">${wish()},</span><span class="gn"><b>${E(u.name)}</b> <i class="wv">👋</i></span></div>${u.desc ? `<div class="mut gdesc">${E(u.desc)}</div>` : ""}</div><button class="lobtn gsw" data-sw="1" aria-label="Tukar profil" title="Tukar profil"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M17 11l2 2 4-4"/></svg><span>Tukar profil</span></button></div>`; }
+    g.innerHTML = `<div class="gwrap"><span data-act="nav_profile" role="button" aria-label="Profil">${avHTML(u, 74)}</span><div style="flex:1;min-width:0"><div class="g1"><span class="gw">${wish()},</span><span class="gn"><b style="font-size:${nmFs(u.name)}px">${E(u.name)}</b>${[...u.name].length <= 12 ? ' <i class="wv">👋</i>' : ""}</span></div>${u.desc ? `<div class="mut gdesc">${E(u.desc)}</div>` : ""}</div><button class="lobtn gsw" data-sw="1" aria-label="Tukar profil" title="Tukar profil"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M17 11l2 2 4-4"/></svg><span>Tukar profil</span></button></div>`; }
     const nb = document.getElementById("navAv"); if (nb) nb.innerHTML = avHTML(u, 23);
     g.hidden = location.hash.slice(1) !== "";
   };
@@ -1967,7 +1969,7 @@ function panel(msg, good) {
       <div class="mut" style="margin-top:12px">Tambah pengguna baru</div><input type="text" id="auN" placeholder="Nama"><input type="text" id="auU" placeholder="username" autocapitalize="none"><input type="text" id="auP" placeholder="password (min 6)" autocomplete="off"><button class="pri" data-z="au">Tambah</button></div></details>`;
   }
   ov.innerHTML = `<div class="rzbox pn"><div class="grab"></div><div class="phd"><h2>Profil</h2><button class="pri" data-z="x">✕ Tutup</button></div>
-    <div class="phero">${avHTML(me, 92)}<div class="grow" style="min-width:0"><div class="pn1">${E(me.name)}</div>${me.desc ? `<div class="mut">${E(me.desc)}</div>` : ""}</div></div>
+    <div class="phero">${avHTML(me, 92)}<div class="grow" style="min-width:0"><div class="pn1" style="font-size:${Math.min(20, nmFs(me.name) - 2)}px">${E(me.name)}</div>${me.desc ? `<div class="mut">${E(me.desc)}</div>` : ""}</div></div>
     <div class="${good ? "rzok" : "rzerr"}" id="rzM" style="margin-top:6px">${E(msg || "")}</div>
     <details class="acc" data-s="av" ${PSEC.av || AVDR ? "open" : ""}><summary>🎨 Avatar</summary><div class="accb"><div class="row" style="margin:0 0 10px;gap:14px;flex-wrap:nowrap;align-items:flex-start">${cav && cav.t === "fig" ? `<span class="avbody" style="width:96px;height:134px;background:${AVB[fg.bg]}">${avSvg(fg, true)}</span>` : avHTML(meV, 96)}<div class="grow"><div class="mut" style="margin-bottom:8px">Reka watak sendiri, atau guna gambar dari phone.</div><div class="row" style="margin:0"><button data-z="avU">📷 Gambar sendiri</button><button data-z="avRnd">🎲 Rawak</button>${cav ? '<button class="del" data-z="avR">Reset</button>' : ""}</div></div></div>
     <input type="file" id="avF" accept="image/*" hidden>
