@@ -91,7 +91,7 @@ h1.home{font-size:24px;display:flex;align-items:center;gap:8px}
 /* ===== UI lebih senang tekan ===== */
 html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
 button,input,select,label,summary{touch-action:manipulation}
-main{padding-bottom:196px}
+main{padding-bottom:128px}
 button{min-height:46px;padding:10px 16px;border-radius:12px;font-weight:500;transition:transform .12s,background .2s,box-shadow .2s,opacity .2s}
 button:hover{filter:brightness(.97)}button.pri{box-shadow:0 3px 10px rgba(15,118,110,.28)}
 input,textarea,select{min-height:44px;padding:10px 12px;border-radius:10px}
@@ -108,7 +108,7 @@ input[type=file]{padding:8px}
 #sndBtn{min-width:48px;font-size:18px}
 /* nav dinaikkan supaya tak bertindih dengan badge Powered by Netlify (bucu kanan bawah) */
 body::after{content:"";position:fixed;left:0;right:0;bottom:0;height:calc(68px + env(safe-area-inset-bottom,0px));background:var(--bg);z-index:59;pointer-events:none}
-#nav{position:fixed;left:10px;right:10px;bottom:calc(68px + env(safe-area-inset-bottom,0px));z-index:60;display:flex;gap:6px;justify-content:center;padding:6px 8px;background:var(--card);border:1px solid var(--bd);border-radius:20px;box-shadow:0 4px 16px rgba(0,0,0,.12)}
+#nav{position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:60;display:flex;gap:6px;justify-content:center;padding:6px 8px;background:var(--card);border:1px solid var(--bd);border-radius:20px;box-shadow:0 4px 16px rgba(0,0,0,.12)}
 #nav button{flex:1;max-width:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:56px;padding:6px 4px;background:transparent;font-size:11px;color:var(--mut);border-radius:14px}
 #nav button b{font-size:21px;line-height:1;filter:grayscale(.6);transition:transform .2s,filter .2s}
 #nav button.on{background:var(--in);color:var(--ac);font-weight:700}#nav button.on b{filter:none;transform:scale(1.15)}
@@ -218,7 +218,7 @@ button.pri{box-shadow:none}
 .chip{cursor:pointer}
 </style>
 <style>
-#shareFab{width:54px;height:54px;left:14px;bottom:calc(158px + env(safe-area-inset-bottom,0px));background:linear-gradient(145deg,#2dd4bf,#0f766e);color:#fff;border:0;box-shadow:0 8px 20px rgba(15,118,110,.45);display:flex;align-items:center;justify-content:center;animation:fabin .5s cubic-bezier(.2,.9,.3,1.3) .4s both}
+#shareFab{width:54px;height:54px;left:14px;bottom:calc(112px + env(safe-area-inset-bottom,0px));background:linear-gradient(145deg,#2dd4bf,#0f766e);color:#fff;border:0;box-shadow:0 8px 20px rgba(15,118,110,.45);display:flex;align-items:center;justify-content:center;animation:fabin .5s cubic-bezier(.2,.9,.3,1.3) .4s both}
 #shareFab:active{transform:scale(.9)}
 @keyframes fabin{from{opacity:0;transform:translateY(20px) scale(.6)}to{opacity:1;transform:none}}
 .colbtn{width:100%;display:flex;justify-content:space-between;align-items:center;gap:8px;min-height:50px;padding:0 16px;margin:6px 0 10px;border:1.5px solid var(--ac);border-radius:14px;background:color-mix(in srgb,var(--ac) 10%,var(--card));color:var(--ac);font-weight:700;font-size:15px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
@@ -331,10 +331,18 @@ body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-f
 .lgopt{display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 14px;margin:0 0 8px;border-radius:14px;border:1px solid var(--bd,#4443);background:transparent;color:inherit;font:600 16px system-ui,sans-serif;cursor:pointer;text-align:left}
 .lgopt.on{border-color:var(--ac,#6cf);background:rgba(120,160,255,.12)}
 .lgopt small{opacity:.6;font-weight:500}
+</style><style>
+#rzGreet{position:relative}
+#rzGreet .gsw{flex:none;height:34px;font-size:12px;padding:0 10px 0 8px;margin-left:auto}
+#rzGreet .gsw svg{width:16px;height:16px}
+@media(max-width:420px){#rzGreet .gsw span{display:none!important}#rzGreet .gsw{width:36px;height:36px;padding:0;border-radius:50%}#rzGreet .gsw svg{width:20px;height:20px}}
+.localbn{gap:8px;padding:6px 10px;margin-bottom:10px;border-left-width:3px;opacity:.92}
+.localbn .lbic{font-size:15px}.localbn b{font-size:11.5px;line-height:1.25}.localbn .mut{font-size:10px;line-height:1.3;margin-top:1px}.localbn{padding:5px 8px}
+.lbbtn{min-height:26px!important;padding:0 8px!important;font-size:11px}
 </style></head>
 <body class="rz-locked">
 <main>
-<div class="top"><h1 id="appT" class="home"><span class="lg">🧰</span><span class="brand">RIZTOOLS</span><span class="myf"><svg viewBox="0 0 28 14" aria-label="Bendera Malaysia" role="img"><rect y="0" width="28" height="1" fill="#cc0001"/><rect y="1" width="28" height="1" fill="#fff"/><rect y="2" width="28" height="1" fill="#cc0001"/><rect y="3" width="28" height="1" fill="#fff"/><rect y="4" width="28" height="1" fill="#cc0001"/><rect y="5" width="28" height="1" fill="#fff"/><rect y="6" width="28" height="1" fill="#cc0001"/><rect y="7" width="28" height="1" fill="#fff"/><rect y="8" width="28" height="1" fill="#cc0001"/><rect y="9" width="28" height="1" fill="#fff"/><rect y="10" width="28" height="1" fill="#cc0001"/><rect y="11" width="28" height="1" fill="#fff"/><rect y="12" width="28" height="1" fill="#cc0001"/><rect y="13" width="28" height="1" fill="#fff"/><rect width="14" height="8" fill="#010066"/><circle cx="5" cy="4" r="3" fill="#fc0"/><circle cx="5.95" cy="4" r="2.45" fill="#010066"/><polygon points="9.60,1.30 9.86,2.88 10.77,1.57 10.32,3.10 11.71,2.32 10.64,3.50 12.23,3.40 10.75,4.00 12.23,4.60 10.64,4.50 11.71,5.68 10.32,4.90 10.77,6.43 9.86,5.12 9.60,6.70 9.34,5.12 8.43,6.43 8.88,4.90 7.49,5.68 8.56,4.50 6.97,4.60 8.45,4.00 6.97,3.40 8.56,3.50 7.49,2.32 8.88,3.10 8.43,1.57 9.34,2.88" fill="#fc0"/></svg></span></h1><button class="lobtn" data-sw="1" aria-label="Tukar profil" title="Tukar profil"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M17 11l2 2 4-4"/></svg><span>Tukar profil</span></button><span class="grow"></span><button id="backBtn" class="ghost" data-act="home" hidden>← Menu</button><button id="langBtn" class="ghost" data-lang-open="1" data-notr="1" aria-label="Language" title="Bahasa / Language"><span aria-hidden="true">🌐</span><b id="langCode">MS</b></button><button id="sndBtn" class="ghost" data-act="sound"></button></div>
+<div class="top"><h1 id="appT" class="home"><span class="lg">🧰</span><span class="brand">RIZTOOLS</span><span class="myf"><svg viewBox="0 0 28 14" aria-label="Bendera Malaysia" role="img"><rect y="0" width="28" height="1" fill="#cc0001"/><rect y="1" width="28" height="1" fill="#fff"/><rect y="2" width="28" height="1" fill="#cc0001"/><rect y="3" width="28" height="1" fill="#fff"/><rect y="4" width="28" height="1" fill="#cc0001"/><rect y="5" width="28" height="1" fill="#fff"/><rect y="6" width="28" height="1" fill="#cc0001"/><rect y="7" width="28" height="1" fill="#fff"/><rect y="8" width="28" height="1" fill="#cc0001"/><rect y="9" width="28" height="1" fill="#fff"/><rect y="10" width="28" height="1" fill="#cc0001"/><rect y="11" width="28" height="1" fill="#fff"/><rect y="12" width="28" height="1" fill="#cc0001"/><rect y="13" width="28" height="1" fill="#fff"/><rect width="14" height="8" fill="#010066"/><circle cx="5" cy="4" r="3" fill="#fc0"/><circle cx="5.95" cy="4" r="2.45" fill="#010066"/><polygon points="9.60,1.30 9.86,2.88 10.77,1.57 10.32,3.10 11.71,2.32 10.64,3.50 12.23,3.40 10.75,4.00 12.23,4.60 10.64,4.50 11.71,5.68 10.32,4.90 10.77,6.43 9.86,5.12 9.60,6.70 9.34,5.12 8.43,6.43 8.88,4.90 7.49,5.68 8.56,4.50 6.97,4.60 8.45,4.00 6.97,3.40 8.56,3.50 7.49,2.32 8.88,3.10 8.43,1.57 9.34,2.88" fill="#fc0"/></svg></span></h1><span class="grow"></span><button id="backBtn" class="ghost" data-act="home" hidden>← Menu</button><button id="langBtn" class="ghost" data-lang-open="1" data-notr="1" aria-label="Language" title="Bahasa / Language"><span aria-hidden="true">🌐</span><b id="langCode">MS</b></button><button id="sndBtn" class="ghost" data-act="sound"></button></div>
 
 <section id="home">
   <div class="card localbn" role="note"><span class="lbic">💾</span><div class="grow"><b>Simpanan local sahaja, bukan cloud</b><div class="mut">Data kekal dalam peranti ni. Cloud akan datang nanti, jadi buat backup selalu.</div></div><button class="ghost lbbtn" data-act="nav_profile">Backup</button></div>
@@ -522,7 +530,7 @@ function moreSheet() {
 function shareSheet() {
   sheet(shHead("Kongsi app") + '<div class="mut" style="margin-bottom:10px">Hantar link RIZTOOLS kepada kawan.</div><div class="row"><button class="pri grow" data-act="sh_wa">WhatsApp</button><button data-act="sh_native">Lain-lain</button><button data-act="sh_copy">Salin link</button></div><div class="mut" id="shMsg" style="min-height:18px"></div>');
 }
-const SHARE_URL = "https://myriztools.netlify.app/", SHARE_TXT = "Cuba RIZTOOLS, app untuk urus sewa, bil, claim & belanja. Tekan link ni 👇";
+const SHARE_URL = "https://rajaizzzack.github.io/riztools/", SHARE_TXT = "Cuba RIZTOOLS, app untuk urus sewa, bil, claim & belanja. Tekan link ni 👇";
 function shAct(a) {
   const m = document.getElementById("shMsg");
   if (a === "sh_wa") { sfx("chime"); window.open("https://wa.me/?text=" + encodeURIComponent(SHARE_TXT + "\n" + SHARE_URL), "_blank"); }
@@ -1927,7 +1935,7 @@ function boot() {
     const u = cur() || CU;
     const sig = (u.av ? u.av.t + (u.av.e || "") + (u.av.c || "") + (u.av.d ? u.av.d.length : "") : "") + u.name + (u.pangkat || "") + wish();
     if (g.dataset.sig !== sig) { g.dataset.sig = sig;
-    g.innerHTML = `<div class="gwrap"><span data-act="nav_profile" role="button" aria-label="Profil">${avHTML(u, 56)}</span><div style="flex:1;min-width:0"><div class="g1"><span class="gw">${wish()},</span><span class="gn"><b>${E(u.name)}</b> <i class="wv">👋</i></span></div>${u.root ? `<div class="mut" style="margin-top:4px"><span class="rzb adm">${E(u.pangkat || "ADMIN")}</span> · @${E(u.username)}</div>` : ""}</div></div>`; }
+    g.innerHTML = `<div class="gwrap"><span data-act="nav_profile" role="button" aria-label="Profil">${avHTML(u, 56)}</span><div style="flex:1;min-width:0"><div class="g1"><span class="gw">${wish()},</span><span class="gn"><b>${E(u.name)}</b> <i class="wv">👋</i></span></div>${u.root ? `<div class="mut" style="margin-top:4px"><span class="rzb adm">${E(u.pangkat || "ADMIN")}</span> · @${E(u.username)}</div>` : ""}</div><button class="lobtn gsw" data-sw="1" aria-label="Tukar profil" title="Tukar profil"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M17 11l2 2 4-4"/></svg><span>Tukar profil</span></button></div>`; }
     const nb = document.getElementById("navAv"); if (nb) nb.innerHTML = avHTML(u, 23);
     g.hidden = location.hash.slice(1) !== "";
   };
