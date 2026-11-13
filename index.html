@@ -192,6 +192,7 @@ button.pri{box-shadow:none}
 .inst{list-style:none;margin:8px 0 4px;padding:0;display:grid;gap:12px}.inst li{display:flex;gap:12px;align-items:flex-start}.inst .mut{font-size:13px;margin-top:2px}
 .stn{flex:none;display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--ac);color:#fff;font-weight:800;font-size:14px}
 .instn{font-size:12px;margin-top:10px;padding:10px 12px;background:var(--in);border-radius:10px}
+.abx{display:grid;gap:10px;margin:12px 0}#rzPanel .abx .cbl,.abx .cbl{margin:0;display:flex!important;flex-direction:row!important;align-items:flex-start;gap:10px;text-align:left!important}#rzPanel .abx .cbl input,.abx .cbl input{flex:0 0 22px!important;width:22px!important;min-width:22px!important;height:22px!important;margin:2px 0 0!important;padding:0!important}.abx .cbl span{flex:1;font-size:14px}
 .csum .big{margin:2px 0}
 .csum .cmn{margin:12px 0 0}
 .cadd{width:100%;min-height:50px;font-size:16px;margin:0 0 12px}
@@ -1298,14 +1299,61 @@ document.getElementById("bkFile").addEventListener("change", e => {
   fr.onload = () => {
     let d; try { d = JSON.parse(fr.result); if (d.app !== "riztool" || !d.sewa || !d.bil || !d.claim) throw 0; } catch (er) { return alert("File backup tak sah."); }
     if (!confirm("Restore akan GANTI semua data sekarang (Sewa, Bil, Claim, gambar) dengan data dalam file ni. Teruskan?")) return;
+    bkApply(d, m);
+  };
+  fr.readAsText(f);
+});
+function bkApply(d, m) {
+  m = m || document.getElementById("bkMsg") || {};
+  {
     S = d.sewa; H = d.bil; C = d.claim; if (d.z) { Z = d.z; zFix(); zsave(); } if (d.titles) { TT = d.titles; try { localStorage.setItem("riztool_titles", JSON.stringify(TT)); } catch (er) {} route(); } if (d.name) { APPN = d.name; try { localStorage.setItem("riztool_name", APPN); } catch (er) {} route(); }
     Object.keys(PH).forEach(k => delete PH[k]); Object.assign(PH, d.photos || {});
     idbClear().then(() => Object.keys(PH).forEach(k => idbPut(k, PH[k])));
     save(); hsave(); csave(); lastOut = null; hLastLeft = null; if (CF) cCloseForm(true);
     render(); hRender(); cRender(); sfx("chime"); m.textContent = "Restore siap ✅";
-  };
-  fr.readAsText(f);
-});
+  }
+}
+bkLabel();
+/* ===== Auto backup (masa login & logout) ===== */
+const abCfg = () => { let c = {}; try { c = JSON.parse(localStorage.getItem("riztool_autobk") || "{}"); } catch (e) {} return { on: c.on !== false, file: c.file !== false }; };
+window.abSet = (k, v) => { const c = abCfg(); c[k] = !!v; try { localStorage.setItem("riztool_autobk", JSON.stringify(c)); } catch (e) {} };
+window.abGet = abCfg;
+const abDb = () => new Promise((res, rej) => { try { const r = indexedDB.open("rz_autobk", 1); r.onupgradeneeded = () => r.result.createObjectStore("s", { keyPath: "id" }); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); } catch (e) { rej(e); } });
+async function abSnap(json, evt, at) {
+  const db = await abDb();
+  await new Promise((res, rej) => { const tx = db.transaction("s", "readwrite"), st = tx.objectStore("s"); st.put({ id: Date.now(), evt, at, size: json.length, json });
+    const ks = st.getAllKeys(); ks.onsuccess = () => { const k = ks.result.sort((a, b) => b - a); k.slice(5).forEach(x => st.delete(x)); }; tx.oncomplete = res; tx.onerror = () => rej(tx.error); });
+  db.close();
+}
+function abToast(t) { let el = document.getElementById("abToast"); if (!el) { el = document.createElement("div"); el.id = "abToast"; el.style.cssText = "position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 14px);transform:translateX(-50%);z-index:2000;background:#111;color:#fff;padding:10px 16px;border-radius:999px;font-size:14px;box-shadow:0 6px 20px rgba(0,0,0,.3);max-width:90vw"; document.body.appendChild(el); } el.textContent = t; el.hidden = false; clearTimeout(el._t); el._t = setTimeout(() => { el.hidden = true; }, 2600); }
+window.autoBk = async function (evt) {
+  const cfg = abCfg(); if (!cfg.on) return;
+  try {
+    abToast(evt === "logout" ? "💾 Auto backup sebelum log keluar..." : "💾 Auto backup...");
+    const d = { app: "riztool", v: 1, at: new Date().toISOString(), sewa: S, bil: H, claim: C, photos: PH, z: Z, name: APPN, titles: TT, auto: evt };
+    const json = JSON.stringify(d);
+    await abSnap(json, evt, d.at);
+    try { localStorage.setItem(BKT, d.at); } catch (e) {} bkLabel();
+    if (cfg.file) {
+      const name = "riztool-auto-" + today() + "-" + evt + ".json", file = new File([json], name, { type: "application/json" });
+      const u = URL.createObjectURL(file), l = document.createElement("a"); l.href = u; l.download = name; document.body.appendChild(l); l.click(); l.remove(); setTimeout(() => URL.revokeObjectURL(u), 4000);
+      if (evt === "logout") await new Promise(r => setTimeout(r, 900));
+    }
+    abToast("Auto backup siap ✅");
+  } catch (e) { abToast("Auto backup tak berjaya"); }
+};
+window.abList = async function () {
+  let rows = []; try { const db = await abDb(); rows = await new Promise(res => { const r = db.transaction("s").objectStore("s").getAll(); r.onsuccess = () => res(r.result); r.onerror = () => res([]); }); db.close(); } catch (e) {}
+  rows.sort((a, b) => b.id - a.id);
+  const ov = sheet(""), box = ov.firstElementChild; ov.style.zIndex = 1300;
+  const kb = n => n > 1048576 ? (n / 1048576).toFixed(1) + " MB" : Math.max(1, Math.round(n / 1024)) + " KB";
+  box.innerHTML = shHead("↩️ Salinan automatik") + '<div class="mut" style="margin-bottom:10px">5 salinan terakhir disimpan dalam app (setiap kali log masuk dan keluar). Pilih satu untuk pulihkan.</div>' +
+    (rows.length ? rows.map(r => `<div class="card" style="display:flex;gap:10px;align-items:center"><div class="grow"><b>${new Date(r.at).toLocaleString("ms-MY")}</b><div class="mut">${r.evt === "logout" ? "Masa log keluar" : "Masa log masuk"} · ${kb(r.size)}</div></div><button class="pri" data-abr="${r.id}">Pulihkan</button></div>`).join("") : '<div class="card mut">Belum ada salinan automatik. Ia dibuat bila log masuk dan log keluar.</div>');
+  box.addEventListener("click", e => { const b = e.target.closest("[data-abr]"); if (!b) return; const r = rows.find(x => String(x.id) === b.dataset.abr); if (!r) return;
+    if (!confirm("Pulihkan salinan " + new Date(r.at).toLocaleString("ms-MY") + "? Data sekarang akan DIGANTI.")) return;
+    let d; try { d = JSON.parse(r.json); } catch (er) { return alert("Salinan rosak."); } bkApply(d); ov.remove(); abToast("Dipulihkan ✅"); });
+};
+(function () { try { if (sessionStorage.getItem("rz_evt") === "login") { sessionStorage.removeItem("rz_evt"); setTimeout(() => autoBk("login"), 1500); } } catch (e) {} })();
 bkLabel();
 
 </script>
@@ -1705,7 +1753,7 @@ function confirmLogout() {
     ? '<div class="rbox"><div class="rstep">Pengesahan 1 daripada 2</div><h2>Log keluar?</h2><div class="mut">Anda akan keluar dari akaun ni di peranti ni.</div><div class="row" style="justify-content:flex-end;margin-bottom:0"><button data-lo2="x">Batal</button><button class="pri" data-lo2="n">Teruskan</button></div></div>'
     : '<div class="rbox"><div class="rstep">Pengesahan 2 daripada 2</div><h2>Betul nak log keluar?</h2><div class="mut">Data kekal disimpan di peranti ni. Anda perlu log masuk semula untuk guna app.</div><div class="row" style="justify-content:flex-end;margin-bottom:0"><button data-lo2="x">Tak jadi</button><button class="rbtn" data-lo2="go">Ya, log keluar</button></div></div>'; };
   step(1);
-  ov.addEventListener("click", e => { const t = e.target.closest("[data-lo2]"); if (!t) { if (e.target === ov) ov.remove(); return; } const a = t.dataset.lo2; if (a === "x") ov.remove(); else if (a === "n") step(2); else { ov.remove(); logout(); } });
+  ov.addEventListener("click", e => { const t = e.target.closest("[data-lo2]"); if (!t) { if (e.target === ov) ov.remove(); return; } const a = t.dataset.lo2; if (a === "x") ov.remove(); else if (a === "n") step(2); else { ov.remove(); const go = () => logout(); if (window.autoBk) autoBk("logout").then(go, go); else go(); } });
 }
 document.addEventListener("click", e => { if (e.target.closest("[data-lo]")) confirmLogout(); });
 let AVDR = null, AVM = "", PSEC = {};
@@ -1826,7 +1874,7 @@ function showLogin() {
     const u = users().find(x => x.username === un); let ok = false;
     if (u) ok = (await hashPw(pw, u.salt)) === u.hash; else await hashPw(pw, "x");
     if (!ok) { L.n = (L.n || 0) + 1; if (L.n >= 5) { L.until = Date.now() + 30000; L.n = 0; } raw.set(LK, JSON.stringify(L)); return "Username atau password salah."; }
-    raw.del(LK); raw.set(SK, u.id); location.reload(); return "";
+    raw.del(LK); raw.set(SK, u.id); try { sessionStorage.setItem("rz_evt", "login"); } catch (e) {} location.reload(); return "";
   }
   async function doReg() {
     const nm = $("rzN").value.trim(), un = $("rzU").value.trim().toLowerCase(), pw = $("rzP").value;
@@ -1898,7 +1946,7 @@ function panel(msg, good) {
     <details class="acc" data-s="ak" ${op("ak")}><summary>🔐 Nama & password</summary><div class="accb"><div class="mut">Tukar nama</div><div class="row" style="margin-top:4px"><input type="text" id="mNm" value="${E(me.name)}" maxlength="30" style="flex:1;margin:0"><button data-z="nm">Simpan</button></div>
       <div class="mut" style="margin-top:12px">Tukar password</div><input type="password" id="mO" placeholder="Password lama" autocomplete="current-password"><input type="password" id="mP" placeholder="Password baru (min 6)" autocomplete="new-password"><button data-z="pw">Tukar password</button></div></details>
     <details class="acc" data-s="in" ${op("in")}><summary>📲 Pasang di skrin utama</summary><div class="accb"><div class="mut" style="margin-bottom:8px">Jadikan RIZTOOLS ada ikon di phone, buka terus macam app.</div><button class="pri" data-z="inst" style="width:100%">Tengok cara (iPhone &amp; Android)</button></div></details>
-    <details class="acc" data-s="bk" ${op("bk")}><summary>💾 Backup data</summary><div class="accb"><div class="mut" id="bkInfo"></div><div class="row"><button class="pri grow" data-z="bk">💾 Simpan ke peranti</button><button class="grow" data-z="bks">📤 Kongsi / hantar</button></div><div class="row" style="margin-top:0"><button class="grow" data-z="bkl">⬇️ Restore dari fail</button></div><div class="mut" id="bkMsg" style="min-height:20px"></div><div class="mut" style="margin-top:6px">Simpan ke peranti: di PC awak boleh pilih folder. Di phone, pilih Simpan ke Fail atau Drive dalam menu yang keluar. Kongsi: terus ke WhatsApp, emel atau Drive. Backup disimpan di luar app dan bukan di cloud (cloud akan datang). Termasuk semua tool dan gambar.</div></div></details>
+    <details class="acc" data-s="bk" ${op("bk")}><summary>💾 Backup data</summary><div class="accb"><div class="mut" id="bkInfo"></div><div class="row"><button class="pri grow" data-z="bk">💾 Simpan ke peranti</button><button class="grow" data-z="bks">📤 Kongsi / hantar</button></div><div class="row" style="margin-top:0"><button class="grow" data-z="bkl">⬇️ Restore dari fail</button></div><div class="abx"><label class="cbl"><input type="checkbox" data-z="abon" ${window.abGet && abGet().on ? "checked" : ""}><span>Auto backup bila log masuk dan log keluar</span></label><label class="cbl"><input type="checkbox" data-z="abfile" ${window.abGet && abGet().file ? "checked" : ""}><span>Muat turun fail backup sekali (masa log masuk dan keluar)</span></label><button class="grow" data-z="abl" style="width:100%">↩️ Salinan automatik (pulihkan)</button></div><div class="mut" id="bkMsg" style="min-height:20px"></div><div class="mut" style="margin-top:6px">Simpan ke peranti: di PC awak boleh pilih folder. Di phone, pilih Simpan ke Fail atau Drive dalam menu yang keluar. Kongsi: terus ke WhatsApp, emel atau Drive. Backup disimpan di luar app dan bukan di cloud (cloud akan datang). Termasuk semua tool dan gambar.</div></div></details>
     ${adm}
     <details class="acc danger" data-s="dz" ${op("dz")}><summary>⚠️ Zon bahaya</summary><div class="accb"><div class="mut" style="margin-bottom:8px">Padam semua data dalam app ni dan mula dari kosong. Perlu 5 kali pengesahan.</div><button class="rbtn" data-z="rst" style="width:100%">🗑️ Reset semua data</button></div></details>
 </div>`;
@@ -1912,6 +1960,9 @@ async function onClick(e) {
   if (z === "x") return $("rzPanel").remove();
   if (z === "out") return confirmLogout();
   if (z === "inst") return window.installSheet && installSheet();
+  if (z === "abon") return window.abSet("on", t.checked);
+  if (z === "abfile") return window.abSet("file", t.checked);
+  if (z === "abl") return window.abList && abList();
   if (z === "bk") return window.bkAct("bk_save");
   if (z === "bks") return window.bkAct("bk_share");
   if (z === "bkl") return window.bkAct("bk_load");
