@@ -460,7 +460,7 @@ function installSheet(tab) {
   const ua = navigator.userAgent || "", ios = /iPhone|iPad|iPod/i.test(ua) || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
   tab = tab || (ios ? "ios" : "and");
   const old = document.getElementById("instSheet"); let ov = old;
-  if (!ov) { ov = sheet(""); ov.id = "instSheet"; ov.addEventListener("click", e => { const t = e.target.closest("[data-it]"); if (t) installSheet(t.dataset.it); }); }
+  if (!ov) { ov = sheet(""); ov.id = "instSheet"; ov.style.zIndex = 1300; ov.addEventListener("click", e => { const t = e.target.closest("[data-it]"); if (t) installSheet(t.dataset.it); }); }
   const step = (n, h, d) => `<li><span class="stn">${n}</span><div><b>${h}</b>${d ? `<div class="mut">${d}</div>` : ""}</div></li>`;
   const ICO = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px"><path d="M12 15V3M8 7l4-4 4 4"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>';
   const body = tab === "ios"
@@ -2280,7 +2280,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 /* ===== KEMAS KINI APP ===== */
 (function(){
 "use strict";
-var VER="20261114.2",last=0,shown=false;
+var VER="20261114.3",last=0,shown=false;
 try{if(location.search.indexOf("v=")>=0&&history.replaceState)history.replaceState(null,"",location.pathname+location.hash);}catch(e){}
 function css(){
   if(document.getElementById("updCss"))return;
