@@ -1272,7 +1272,7 @@ async function bkRun(mode) {
   await new Promise(r => setTimeout(r, 60));
   let file, name;
   try {
-    const d = { app: "riztool", v: 1, at: new Date().toISOString(), sewa: S, bil: H, claim: C, photos: PH, z: Z, name: APPN, titles: TT };
+    const d = { app: "riztool", v: 1, at: new Date().toISOString(), sewa: S, bil: H, claim: C, photos: PH, z: Z, name: APPN, titles: TT, prof: window.rzProfGet ? rzProfGet() : null };
     name = "riztool-backup-" + today() + ".json"; file = new File([JSON.stringify(d)], name, { type: "application/json" });
     var at = d.at;
   } catch (e) { return bkMsg("Backup gagal disediakan: " + e.message); }
@@ -1306,6 +1306,7 @@ document.getElementById("bkFile").addEventListener("change", e => {
 function bkApply(d, m) {
   m = m || document.getElementById("bkMsg") || {};
   {
+    if (d.prof && window.rzProfSet) rzProfSet(d.prof);
     S = d.sewa; H = d.bil; C = d.claim; if (d.z) { Z = d.z; zFix(); zsave(); } if (d.titles) { TT = d.titles; try { localStorage.setItem("riztool_titles", JSON.stringify(TT)); } catch (er) {} route(); } if (d.name) { APPN = d.name; try { localStorage.setItem("riztool_name", APPN); } catch (er) {} route(); }
     Object.keys(PH).forEach(k => delete PH[k]); Object.assign(PH, d.photos || {});
     idbClear().then(() => Object.keys(PH).forEach(k => idbPut(k, PH[k])));
@@ -1330,7 +1331,7 @@ window.autoBk = async function (evt) {
   const cfg = abCfg(); if (!cfg.on) return;
   try {
     abToast(evt === "logout" ? "💾 Auto backup sebelum log keluar..." : "💾 Auto backup...");
-    const d = { app: "riztool", v: 1, at: new Date().toISOString(), sewa: S, bil: H, claim: C, photos: PH, z: Z, name: APPN, titles: TT, auto: evt };
+    const d = { app: "riztool", v: 1, at: new Date().toISOString(), sewa: S, bil: H, claim: C, photos: PH, z: Z, name: APPN, titles: TT, auto: evt, prof: window.rzProfGet ? rzProfGet() : null };
     const json = JSON.stringify(d);
     await abSnap(json, evt, d.at);
     try { localStorage.setItem(BKT, d.at); } catch (e) {} bkLabel();
@@ -1711,6 +1712,8 @@ async function hashPw(pw, salt) {
 /* ---- Simpan pengguna ---- */
 const users = () => { try { const a = JSON.parse(raw.get(AK)); return Array.isArray(a) ? a : []; } catch (e) { return []; } };
 const saveUsers = a => raw.set(AK, JSON.stringify(a));
+window.rzProfGet = () => { const me = cur(); return me ? { av: me.av || null } : null; };
+window.rzProfSet = p => { const me = cur(); if (!me || !p) return; const a = users(), u = a.find(x => x.id === me.id); if (!u) return; if (p.av) u.av = p.av; else delete u.av; saveUsers(a); try { window.__rzPaint && __rzPaint(); } catch (e) {} };
 async function seed() {
   if (users().length) return;
   const salt = uid();
