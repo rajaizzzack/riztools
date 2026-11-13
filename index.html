@@ -194,6 +194,10 @@ button.pri{box-shadow:none}
 .instn{font-size:12px;margin-top:10px;padding:10px 12px;background:var(--in);border-radius:10px}
 .abx{display:grid;gap:10px;margin:12px 0}#rzPanel .abx .cbl,.abx .cbl{margin:0;display:flex!important;flex-direction:row!important;align-items:flex-start;gap:10px;text-align:left!important}#rzPanel .abx .cbl input,.abx .cbl input{flex:0 0 22px!important;width:22px!important;min-width:22px!important;height:22px!important;margin:2px 0 0!important;padding:0!important}.abx .cbl span{flex:1;font-size:14px}
 .localbn{display:flex;align-items:center;gap:10px;padding:10px 12px;margin-bottom:12px;border-left:4px solid #eab308}.localbn .lbic{font-size:20px}.localbn b{font-size:14px}.localbn .mut{font-size:12px;margin-top:2px}.lbbtn{min-height:36px;padding:0 12px;font-weight:700}
+.plist{display:grid;gap:10px;margin-top:14px}.pcard{display:flex;gap:8px;align-items:stretch}
+.pgo{flex:1;display:flex;align-items:center;gap:12px;text-align:left;min-height:64px;padding:8px 12px;border-radius:14px;min-width:0}
+.pn2{display:flex;flex-direction:column;gap:3px;min-width:0;overflow:hidden}.pn2 b{font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pn2 .rzb{align-self:flex-start}
+.pdel{width:44px;min-height:64px;flex:none;color:var(--bad)}
 .csum .big{margin:2px 0}
 .csum .cmn{margin:12px 0 0}
 .cadd{width:100%;min-height:50px;font-size:16px;margin:0 0 12px}
@@ -261,8 +265,8 @@ html,body{-webkit-text-size-adjust:100%;touch-action:manipulation}
 .opt.sw button.on{outline:2.5px solid var(--ac);outline-offset:1px;color:transparent}
 .avbody{display:inline-block;border-radius:20px;overflow:hidden;flex:none}.avbody svg{display:block;width:100%;height:100%}
 .rzav svg{width:100%;height:100%;display:block}
-.lobtn{flex:none;height:36px;min-height:0;padding:0 12px 0 10px;border-radius:18px;display:flex;align-items:center;justify-content:center;gap:6px;color:var(--bad);background:var(--in);font-size:13px;font-weight:700}.lobtn svg{width:18px;height:18px}
-body:has(#home[hidden]) .lobtn{display:none}
+.lobtn{flex:none;height:36px;min-height:0;padding:0 12px 0 10px;border-radius:18px;display:flex;align-items:center;justify-content:center;gap:6px;color:var(--ac);background:var(--in);font-size:13px;font-weight:700}.lobtn svg{width:18px;height:18px}
+body:has(#home[hidden]) .lobtn{display:none}.lobtn{margin-left:6px}
 @media (max-width:400px){.brand{letter-spacing:.1em;font-size:19px}.myf{width:26px;height:13px}#appT .brand~.pen{width:22px}.lobtn{padding:0 10px 0 8px;font-size:12px}}body.rz-locked .lobtn{display:none}
 </style>
 <style>
@@ -319,7 +323,7 @@ body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-f
 </head>
 <body class="rz-locked">
 <main>
-<div class="top"><h1 id="appT" class="home"><span class="lg">🧰</span><span class="brand">RIZTOOLS</span><span class="myf"><svg viewBox="0 0 28 14" aria-label="Bendera Malaysia" role="img"><rect y="0" width="28" height="1" fill="#cc0001"/><rect y="1" width="28" height="1" fill="#fff"/><rect y="2" width="28" height="1" fill="#cc0001"/><rect y="3" width="28" height="1" fill="#fff"/><rect y="4" width="28" height="1" fill="#cc0001"/><rect y="5" width="28" height="1" fill="#fff"/><rect y="6" width="28" height="1" fill="#cc0001"/><rect y="7" width="28" height="1" fill="#fff"/><rect y="8" width="28" height="1" fill="#cc0001"/><rect y="9" width="28" height="1" fill="#fff"/><rect y="10" width="28" height="1" fill="#cc0001"/><rect y="11" width="28" height="1" fill="#fff"/><rect y="12" width="28" height="1" fill="#cc0001"/><rect y="13" width="28" height="1" fill="#fff"/><rect width="14" height="8" fill="#010066"/><circle cx="5" cy="4" r="3" fill="#fc0"/><circle cx="5.95" cy="4" r="2.45" fill="#010066"/><polygon points="9.60,1.30 9.86,2.88 10.77,1.57 10.32,3.10 11.71,2.32 10.64,3.50 12.23,3.40 10.75,4.00 12.23,4.60 10.64,4.50 11.71,5.68 10.32,4.90 10.77,6.43 9.86,5.12 9.60,6.70 9.34,5.12 8.43,6.43 8.88,4.90 7.49,5.68 8.56,4.50 6.97,4.60 8.45,4.00 6.97,3.40 8.56,3.50 7.49,2.32 8.88,3.10 8.43,1.57 9.34,2.88" fill="#fc0"/></svg></span></h1><span class="grow"></span><button id="backBtn" class="ghost" data-act="home" hidden>← Menu</button><button id="sndBtn" class="ghost" data-act="sound"></button></div>
+<div class="top"><h1 id="appT" class="home"><span class="lg">🧰</span><span class="brand">RIZTOOLS</span><span class="myf"><svg viewBox="0 0 28 14" aria-label="Bendera Malaysia" role="img"><rect y="0" width="28" height="1" fill="#cc0001"/><rect y="1" width="28" height="1" fill="#fff"/><rect y="2" width="28" height="1" fill="#cc0001"/><rect y="3" width="28" height="1" fill="#fff"/><rect y="4" width="28" height="1" fill="#cc0001"/><rect y="5" width="28" height="1" fill="#fff"/><rect y="6" width="28" height="1" fill="#cc0001"/><rect y="7" width="28" height="1" fill="#fff"/><rect y="8" width="28" height="1" fill="#cc0001"/><rect y="9" width="28" height="1" fill="#fff"/><rect y="10" width="28" height="1" fill="#cc0001"/><rect y="11" width="28" height="1" fill="#fff"/><rect y="12" width="28" height="1" fill="#cc0001"/><rect y="13" width="28" height="1" fill="#fff"/><rect width="14" height="8" fill="#010066"/><circle cx="5" cy="4" r="3" fill="#fc0"/><circle cx="5.95" cy="4" r="2.45" fill="#010066"/><polygon points="9.60,1.30 9.86,2.88 10.77,1.57 10.32,3.10 11.71,2.32 10.64,3.50 12.23,3.40 10.75,4.00 12.23,4.60 10.64,4.50 11.71,5.68 10.32,4.90 10.77,6.43 9.86,5.12 9.60,6.70 9.34,5.12 8.43,6.43 8.88,4.90 7.49,5.68 8.56,4.50 6.97,4.60 8.45,4.00 6.97,3.40 8.56,3.50 7.49,2.32 8.88,3.10 8.43,1.57 9.34,2.88" fill="#fc0"/></svg></span></h1><button class="lobtn" data-sw="1" aria-label="Tukar profil" title="Tukar profil"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M17 11l2 2 4-4"/></svg><span>Tukar profil</span></button><span class="grow"></span><button id="backBtn" class="ghost" data-act="home" hidden>← Menu</button><button id="sndBtn" class="ghost" data-act="sound"></button></div>
 
 <section id="home">
   <div class="card localbn" role="note"><span class="lbic">💾</span><div class="grow"><b>Simpanan local sahaja, bukan cloud</b><div class="mut">Data kekal dalam peranti ni. Cloud akan datang nanti, jadi buat backup selalu.</div></div><button class="ghost lbbtn" data-act="nav_profile">Backup</button></div>
@@ -2009,24 +2013,42 @@ async function onClick(e) {
   }
 }
 
-/* ===== Tanpa login: sesi automatik ===== */
+/* ===== Tanpa password: pilih profil ===== */
+const switchProfile = () => { raw.del(SK); try { sessionStorage.setItem("rz_pick", "1"); } catch (e) {} location.reload(); };
+document.addEventListener("click", e => { if (e.target.closest("[data-sw]")) switchProfile(); });
 function startNoLogin() {
   if (CU) return boot();
-  const keys = Object.keys(localStorage), a = users(), cand = [];
-  a.forEach(u => { const has = u.root ? keys.some(k => k.indexOf("riztool_") === 0 || k.indexOf("sewa_") === 0) : keys.some(k => k.indexOf("rzu_" + u.id + "__") === 0); if (has) cand.push(u); });
-  const pick = u => { raw.set(SK, u.id); location.reload(); };
-  if (cand.length === 1) return pick(cand[0]);
+  let forced = false; try { forced = sessionStorage.getItem("rz_pick") === "1"; } catch (e) {}
+  const keys = Object.keys(localStorage), rootData = keys.some(k => k.indexOf("riztool_") === 0 || k.indexOf("sewa_") === 0);
+  const prof = () => users().filter(u => !u.root || rootData);
+  const pick = u => { try { sessionStorage.removeItem("rz_pick"); } catch (e) {} raw.set(SK, u.id); location.reload(); };
+  let L = prof();
+  if (L.length === 1 && !forced) return pick(L[0]);
   document.body.classList.add("rz-locked");
   const ov = document.createElement("div"); ov.className = "rzfull"; ov.id = "rzLogin"; document.body.appendChild(ov);
-  if (cand.length > 1) {
-    ov.innerHTML = `<div class="rzbox"><h2>🧰 RIZTOOLS</h2><div class="mut">Ada lebih satu profil dalam peranti ni. Pilih yang mana satu awak guna:</div><div style="display:grid;gap:8px;margin-top:12px">${cand.map(u => `<button type="button" data-pick="${E(u.id)}" style="display:flex;align-items:center;gap:12px;text-align:left;min-height:56px">${avHTML(u, 40)}<b>${E(u.name)}</b></button>`).join("")}</div></div>`;
-    ov.addEventListener("click", e => { const b = e.target.closest("[data-pick]"); if (b) pick(cand.find(u => u.id === b.dataset.pick)); });
-    return;
-  }
-  ov.innerHTML = `<div class="rzbox"><h2>🧰 RIZTOOLS</h2><div class="mut">Selamat datang! Siapa nama awak? Nama ni untuk sapaan sahaja.</div><form id="rzF" autocomplete="off"><input id="rzN" type="text" maxlength="30" placeholder="Nama awak" autocomplete="name"><div class="rzerr" id="rzE"></div><button class="pri" style="width:100%" type="submit">Mula guna</button></form><div class="mut" style="margin-top:12px;font-size:12px">Tak perlu daftar atau password. Data tersimpan dalam peranti ni sahaja, jadi buat backup selalu.</div></div>`;
-  $("rzN").focus();
-  $("rzF").onsubmit = e => { e.preventDefault(); const nm = $("rzN").value.trim(); if (nm.length < 2 || nm.length > 30) { $("rzE").textContent = "Nama 2-30 huruf."; return; }
-    const u = { id: uid(), username: "", name: nm, pangkat: "USER", root: false, created: Date.now() }; const l = users(); l.push(u); saveUsers(l); pick(u); };
+  let mode = L.length ? "pick" : "new", err = "";
+  const draw = () => {
+    L = prof();
+    if (mode === "pick" && !L.length) mode = "new";
+    if (mode === "new") {
+      ov.innerHTML = `<div class="rzbox"><h2>🧰 RIZTOOLS</h2><div class="mut">${L.length ? "Daftar profil baru. Siapa nama awak?" : "Selamat datang! Siapa nama awak? Nama ni untuk sapaan sahaja."}</div><form id="rzF" autocomplete="off"><input id="rzN" type="text" maxlength="30" placeholder="Nama awak" autocomplete="name"><div class="rzerr" id="rzE">${E(err)}</div><button class="pri" style="width:100%" type="submit">Daftar &amp; mula</button>${L.length ? '<button type="button" data-mode="pick" style="width:100%;margin-top:8px">← Balik pilih profil</button>' : ""}</form><div class="mut" style="margin-top:12px;font-size:12px">Tak perlu password. Data tersimpan dalam peranti ni sahaja, jadi buat backup selalu.</div></div>`;
+      const f = $("rzF"); $("rzN").focus();
+      f.onsubmit = e => { e.preventDefault(); const nm = $("rzN").value.trim(); if (nm.length < 2 || nm.length > 30) { err = "Nama 2-30 huruf."; $("rzE").textContent = err; return; }
+        err = ""; const u = { id: uid(), username: "", name: nm, pangkat: "USER", root: false, created: Date.now() }; const l = users(); l.push(u); saveUsers(l); pick(u); };
+      return;
+    }
+    ov.innerHTML = `<div class="rzbox"><h2>🧰 RIZTOOLS</h2><div class="mut">Siapa yang guna? Pilih profil awak.</div><div class="plist">${L.map(u => `<div class="pcard"><button type="button" class="pgo" data-pick="${E(u.id)}">${avHTML(u, 48)}<span class="pn2"><b>${E(u.name)}</b>${u.root ? '<span class="rzb adm">ADMIN</span>' : ""}</span></button>${u.root ? "" : `<button type="button" class="pdel ghost" data-del="${E(u.id)}" aria-label="Padam profil ${E(u.name)}">✕</button>`}</div>`).join("")}</div><button type="button" class="pri" data-mode="new" style="width:100%;margin-top:12px">＋ Profil baru</button><div class="mut" style="margin-top:12px;font-size:12px">Data setiap profil berasingan dan tersimpan dalam peranti ni sahaja.</div></div>`;
+  };
+  ov.addEventListener("click", e => {
+    const m = e.target.closest("[data-mode]"); if (m) { mode = m.dataset.mode; err = ""; return draw(); }
+    const g = e.target.closest("[data-pick]"); if (g) { const u = users().find(x => x.id === g.dataset.pick); if (u) pick(u); return; }
+    const d = e.target.closest("[data-del]"); if (d) { const u = users().find(x => x.id === d.dataset.del); if (!u || u.root) return;
+      if (!confirm("Padam profil " + u.name + " dan SEMUA data dia dalam peranti ni? Tak boleh undo.")) return;
+      const p = "rzu_" + u.id + "__"; Object.keys(localStorage).forEach(k => { if (k.indexOf(p) === 0) raw.del(k); });
+      try { indexedDB.deleteDatabase(p + "riztool_claim"); indexedDB.deleteDatabase(p + "rz_autobk"); } catch (er) {}
+      saveUsers(users().filter(x => x.id !== u.id)); draw(); }
+  });
+  draw();
 }
 startNoLogin();
 })();
