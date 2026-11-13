@@ -193,6 +193,7 @@ button.pri{box-shadow:none}
 .stn{flex:none;display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--ac);color:#fff;font-weight:800;font-size:14px}
 .instn{font-size:12px;margin-top:10px;padding:10px 12px;background:var(--in);border-radius:10px}
 .abx{display:grid;gap:10px;margin:12px 0}#rzPanel .abx .cbl,.abx .cbl{margin:0;display:flex!important;flex-direction:row!important;align-items:flex-start;gap:10px;text-align:left!important}#rzPanel .abx .cbl input,.abx .cbl input{flex:0 0 22px!important;width:22px!important;min-width:22px!important;height:22px!important;margin:2px 0 0!important;padding:0!important}.abx .cbl span{flex:1;font-size:14px}
+.localbn{display:flex;align-items:center;gap:10px;padding:10px 12px;margin-bottom:12px;border-left:4px solid #eab308}.localbn .lbic{font-size:20px}.localbn b{font-size:14px}.localbn .mut{font-size:12px;margin-top:2px}.lbbtn{min-height:36px;padding:0 12px;font-weight:700}
 .csum .big{margin:2px 0}
 .csum .cmn{margin:12px 0 0}
 .cadd{width:100%;min-height:50px;font-size:16px;margin:0 0 12px}
@@ -318,9 +319,10 @@ body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-f
 </head>
 <body class="rz-locked">
 <main>
-<div class="top"><h1 id="appT" class="home"><span class="lg">🧰</span><span class="brand">RIZTOOLS</span><span class="myf"><svg viewBox="0 0 28 14" aria-label="Bendera Malaysia" role="img"><rect y="0" width="28" height="1" fill="#cc0001"/><rect y="1" width="28" height="1" fill="#fff"/><rect y="2" width="28" height="1" fill="#cc0001"/><rect y="3" width="28" height="1" fill="#fff"/><rect y="4" width="28" height="1" fill="#cc0001"/><rect y="5" width="28" height="1" fill="#fff"/><rect y="6" width="28" height="1" fill="#cc0001"/><rect y="7" width="28" height="1" fill="#fff"/><rect y="8" width="28" height="1" fill="#cc0001"/><rect y="9" width="28" height="1" fill="#fff"/><rect y="10" width="28" height="1" fill="#cc0001"/><rect y="11" width="28" height="1" fill="#fff"/><rect y="12" width="28" height="1" fill="#cc0001"/><rect y="13" width="28" height="1" fill="#fff"/><rect width="14" height="8" fill="#010066"/><circle cx="5" cy="4" r="3" fill="#fc0"/><circle cx="5.95" cy="4" r="2.45" fill="#010066"/><polygon points="9.60,1.30 9.86,2.88 10.77,1.57 10.32,3.10 11.71,2.32 10.64,3.50 12.23,3.40 10.75,4.00 12.23,4.60 10.64,4.50 11.71,5.68 10.32,4.90 10.77,6.43 9.86,5.12 9.60,6.70 9.34,5.12 8.43,6.43 8.88,4.90 7.49,5.68 8.56,4.50 6.97,4.60 8.45,4.00 6.97,3.40 8.56,3.50 7.49,2.32 8.88,3.10 8.43,1.57 9.34,2.88" fill="#fc0"/></svg></span></h1><button class="lobtn" data-lo="1" aria-label="Log keluar" title="Log keluar"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg><span>Logout</span></button><span class="grow"></span><button id="backBtn" class="ghost" data-act="home" hidden>← Menu</button><button id="sndBtn" class="ghost" data-act="sound"></button></div>
+<div class="top"><h1 id="appT" class="home"><span class="lg">🧰</span><span class="brand">RIZTOOLS</span><span class="myf"><svg viewBox="0 0 28 14" aria-label="Bendera Malaysia" role="img"><rect y="0" width="28" height="1" fill="#cc0001"/><rect y="1" width="28" height="1" fill="#fff"/><rect y="2" width="28" height="1" fill="#cc0001"/><rect y="3" width="28" height="1" fill="#fff"/><rect y="4" width="28" height="1" fill="#cc0001"/><rect y="5" width="28" height="1" fill="#fff"/><rect y="6" width="28" height="1" fill="#cc0001"/><rect y="7" width="28" height="1" fill="#fff"/><rect y="8" width="28" height="1" fill="#cc0001"/><rect y="9" width="28" height="1" fill="#fff"/><rect y="10" width="28" height="1" fill="#cc0001"/><rect y="11" width="28" height="1" fill="#fff"/><rect y="12" width="28" height="1" fill="#cc0001"/><rect y="13" width="28" height="1" fill="#fff"/><rect width="14" height="8" fill="#010066"/><circle cx="5" cy="4" r="3" fill="#fc0"/><circle cx="5.95" cy="4" r="2.45" fill="#010066"/><polygon points="9.60,1.30 9.86,2.88 10.77,1.57 10.32,3.10 11.71,2.32 10.64,3.50 12.23,3.40 10.75,4.00 12.23,4.60 10.64,4.50 11.71,5.68 10.32,4.90 10.77,6.43 9.86,5.12 9.60,6.70 9.34,5.12 8.43,6.43 8.88,4.90 7.49,5.68 8.56,4.50 6.97,4.60 8.45,4.00 6.97,3.40 8.56,3.50 7.49,2.32 8.88,3.10 8.43,1.57 9.34,2.88" fill="#fc0"/></svg></span></h1><span class="grow"></span><button id="backBtn" class="ghost" data-act="home" hidden>← Menu</button><button id="sndBtn" class="ghost" data-act="sound"></button></div>
 
 <section id="home">
+  <div class="card localbn" role="note"><span class="lbic">💾</span><div class="grow"><b>Simpanan local sahaja, bukan cloud</b><div class="mut">Data kekal dalam peranti ni. Cloud akan datang nanti, jadi buat backup selalu.</div></div><button class="ghost lbbtn" data-act="nav_profile">Backup</button></div>
   <div id="instBn" class="card instbn" hidden><span class="instic">📲</span><div class="grow"><b>Pasang di skrin utama</b><div class="mut">Buka terus macam app, tanpa buka browser.</div></div><button class="pri" data-act="inst">Cara</button><button class="ghost instx" data-act="inst_x" aria-label="Tutup">✕</button></div>
   <div id="zRem"></div>
   <p class="mut">Pilih tool untuk mula.</p>
@@ -1328,14 +1330,17 @@ async function abSnap(json, evt, at) {
 }
 function abToast(t) { let el = document.getElementById("abToast"); if (!el) { el = document.createElement("div"); el.id = "abToast"; el.style.cssText = "position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 14px);transform:translateX(-50%);z-index:2000;background:#111;color:#fff;padding:10px 16px;border-radius:999px;font-size:14px;box-shadow:0 6px 20px rgba(0,0,0,.3);max-width:90vw"; document.body.appendChild(el); } el.textContent = t; el.hidden = false; clearTimeout(el._t); el._t = setTimeout(() => { el.hidden = true; }, 2600); }
 window.autoBk = async function (evt) {
-  const cfg = abCfg(); if (!cfg.on) return;
+  const cfg = abCfg(); if (!cfg.on) return; const now = Date.now(); let lastS = 0, lastF = 0; try { lastS = +localStorage.getItem("riztool_ab_s") || 0; lastF = +localStorage.getItem("riztool_ab_f") || 0; } catch (e) {}
+  if (evt === "buka" && now - lastS < 12 * 3600e3) return;
   try {
-    abToast(evt === "logout" ? "💾 Auto backup sebelum log keluar..." : "💾 Auto backup...");
+    abToast("💾 Auto backup...");
     const d = { app: "riztool", v: 1, at: new Date().toISOString(), sewa: S, bil: H, claim: C, photos: PH, z: Z, name: APPN, titles: TT, auto: evt, prof: window.rzProfGet ? rzProfGet() : null };
     const json = JSON.stringify(d);
     await abSnap(json, evt, d.at);
     try { localStorage.setItem(BKT, d.at); } catch (e) {} bkLabel();
-    if (cfg.file) {
+    try { localStorage.setItem("riztool_ab_s", String(now)); } catch (e) {}
+    if (cfg.file && (evt !== "buka" || now - lastF >= 24 * 3600e3)) {
+      try { localStorage.setItem("riztool_ab_f", String(now)); } catch (e) {}
       const name = "riztool-auto-" + today() + "-" + evt + ".json", file = new File([json], name, { type: "application/json" });
       const u = URL.createObjectURL(file), l = document.createElement("a"); l.href = u; l.download = name; document.body.appendChild(l); l.click(); l.remove(); setTimeout(() => URL.revokeObjectURL(u), 4000);
       if (evt === "logout") await new Promise(r => setTimeout(r, 900));
@@ -1348,13 +1353,13 @@ window.abList = async function () {
   rows.sort((a, b) => b.id - a.id);
   const ov = sheet(""), box = ov.firstElementChild; ov.style.zIndex = 1300;
   const kb = n => n > 1048576 ? (n / 1048576).toFixed(1) + " MB" : Math.max(1, Math.round(n / 1024)) + " KB";
-  box.innerHTML = shHead("↩️ Salinan automatik") + '<div class="mut" style="margin-bottom:10px">5 salinan terakhir disimpan dalam app (setiap kali log masuk dan keluar). Pilih satu untuk pulihkan.</div>' +
-    (rows.length ? rows.map(r => `<div class="card" style="display:flex;gap:10px;align-items:center"><div class="grow"><b>${new Date(r.at).toLocaleString("ms-MY")}</b><div class="mut">${r.evt === "logout" ? "Masa log keluar" : "Masa log masuk"} · ${kb(r.size)}</div></div><button class="pri" data-abr="${r.id}">Pulihkan</button></div>`).join("") : '<div class="card mut">Belum ada salinan automatik. Ia dibuat bila log masuk dan log keluar.</div>');
+  box.innerHTML = shHead("↩️ Salinan automatik") + '<div class="mut" style="margin-bottom:10px">5 salinan terakhir disimpan dalam app (dibuat automatik bila app dibuka, sekali sehari). Pilih satu untuk pulihkan.</div>' +
+    (rows.length ? rows.map(r => `<div class="card" style="display:flex;gap:10px;align-items:center"><div class="grow"><b>${new Date(r.at).toLocaleString("ms-MY")}</b><div class="mut">${r.evt === "logout" ? "Masa log keluar" : r.evt === "login" ? "Masa log masuk" : "Masa app dibuka"} · ${kb(r.size)}</div></div><button class="pri" data-abr="${r.id}">Pulihkan</button></div>`).join("") : '<div class="card mut">Belum ada salinan automatik. Ia dibuat automatik bila app dibuka (sekali sehari).</div>');
   box.addEventListener("click", e => { const b = e.target.closest("[data-abr]"); if (!b) return; const r = rows.find(x => String(x.id) === b.dataset.abr); if (!r) return;
     if (!confirm("Pulihkan salinan " + new Date(r.at).toLocaleString("ms-MY") + "? Data sekarang akan DIGANTI.")) return;
     let d; try { d = JSON.parse(r.json); } catch (er) { return alert("Salinan rosak."); } bkApply(d); ov.remove(); abToast("Dipulihkan ✅"); });
 };
-(function () { try { if (sessionStorage.getItem("rz_evt") === "login") { sessionStorage.removeItem("rz_evt"); setTimeout(() => autoBk("login"), 1500); } } catch (e) {} })();
+setTimeout(() => { try { autoBk("buka"); } catch (e) {} }, 2500);
 bkLabel();
 
 </script>
@@ -1714,11 +1719,7 @@ const users = () => { try { const a = JSON.parse(raw.get(AK)); return Array.isAr
 const saveUsers = a => raw.set(AK, JSON.stringify(a));
 window.rzProfGet = () => { const me = cur(); return me ? { av: me.av || null } : null; };
 window.rzProfSet = p => { const me = cur(); if (!me || !p) return; const a = users(), u = a.find(x => x.id === me.id); if (!u) return; if (p.av) u.av = p.av; else delete u.av; saveUsers(a); try { window.__rzPaint && __rzPaint(); } catch (e) {} };
-async function seed() {
-  if (users().length) return;
-  const salt = uid();
-  saveUsers([{ id: "root", username: "rajaizzzack", name: "Rajaizzzack", pangkat: "ADMIN", root: true, salt, hash: await hashPw("12345678", salt), created: Date.now() }]);
-}
+async function seed() { /* tak digunakan: tiada login */ }
 const checkUser = (un, nm, pw) => {
   if (!/^[a-z0-9_.]{3,20}$/.test(un)) return "Username 3-20 huruf kecil / nombor / _ / . sahaja.";
   if (nm.length < 2 || nm.length > 30) return "Nama 2-30 huruf.";
@@ -1911,7 +1912,7 @@ function boot() {
     const u = cur() || CU;
     const sig = (u.av ? u.av.t + (u.av.e || "") + (u.av.c || "") + (u.av.d ? u.av.d.length : "") : "") + u.name + (u.pangkat || "") + wish();
     if (g.dataset.sig !== sig) { g.dataset.sig = sig;
-    g.innerHTML = `<div class="gwrap"><span data-act="nav_profile" role="button" aria-label="Profil">${avHTML(u, 56)}</span><div style="flex:1;min-width:0"><div class="g1"><span class="gw">${wish()},</span><span class="gn"><b>${E(u.name)}</b> <i class="wv">👋</i></span></div><div class="mut" style="margin-top:4px"><span class="rzb ${u.root ? "adm" : ""}">${E(u.pangkat || "USER")}</span> · @${E(u.username)}</div></div></div>`; }
+    g.innerHTML = `<div class="gwrap"><span data-act="nav_profile" role="button" aria-label="Profil">${avHTML(u, 56)}</span><div style="flex:1;min-width:0"><div class="g1"><span class="gw">${wish()},</span><span class="gn"><b>${E(u.name)}</b> <i class="wv">👋</i></span></div>${u.root ? `<div class="mut" style="margin-top:4px"><span class="rzb adm">${E(u.pangkat || "ADMIN")}</span> · @${E(u.username)}</div>` : ""}</div></div>`; }
     const nb = document.getElementById("navAv"); if (nb) nb.innerHTML = avHTML(u, 23);
     g.hidden = location.hash.slice(1) !== "";
   };
@@ -1932,7 +1933,7 @@ function panel(msg, good) {
   const st = ov.firstElementChild ? ov.firstElementChild.scrollTop : 0, cav = AVDR ? (AVDR.t === "none" ? null : AVDR) : me.av, meV = Object.assign({}, me, { av: cav }), fg = cav && cav.t === "fig" ? Object.assign({}, AVD, cav) : AVD, O = (lb, k, L) => { const sw = typeof L[0] === "string" && L[0][0] === "#"; return `<div class="mut">${lb}</div><div class="opt ${sw ? "sw" : ""}">${L.map((x, i) => `<button data-z="avf" data-k="${k}" data-v="${i}" class="${fg[k] === i ? "on" : ""}" ${sw ? `style="background:${x}" aria-label="${lb} ${i + 1}"` : ""}>${sw ? "" : x}</button>`).join("")}</div>`; };
   const op = k => (PSEC[k] ? "open" : "");
   let adm = "";
-  if (me.root) {
+  if (false) {
     const list = users().filter(u => u.id !== me.id).map(u => `<div class="rzu"><div><b>${E(u.name)}</b> <span class="mut">@${E(u.username)}</span></div>
       <div class="row"><input type="text" id="pk_${u.id}" value="${E(u.pangkat || "USER")}" maxlength="16" style="flex:1;margin:0"><button data-z="pk" data-id="${u.id}">Simpan pangkat</button></div>
       <div class="row"><button data-z="rp" data-id="${u.id}">🔑 Reset password</button><button class="del" data-z="dl" data-id="${u.id}">🗑️ Padam</button></div></div>`).join("") || '<div class="mut">Belum ada pengguna lain.</div>';
@@ -1941,15 +1942,14 @@ function panel(msg, good) {
       <div class="mut" style="margin-top:12px">Tambah pengguna baru</div><input type="text" id="auN" placeholder="Nama"><input type="text" id="auU" placeholder="username" autocapitalize="none"><input type="text" id="auP" placeholder="password (min 6)" autocomplete="off"><button class="pri" data-z="au">Tambah</button></div></details>`;
   }
   ov.innerHTML = `<div class="rzbox pn"><div class="grab"></div><div class="phd"><h2>Profil</h2><button class="pri" data-z="x">✕ Tutup</button></div>
-    <div class="phero">${avHTML(me, 72)}<div class="grow" style="min-width:0"><div class="pn1">${E(me.name)}</div><div><span class="rzb ${me.root ? "adm" : ""}">${E(me.pangkat || "USER")}</span> <span class="mut">@${E(me.username)}</span></div></div></div>
+    <div class="phero">${avHTML(me, 72)}<div class="grow" style="min-width:0"><div class="pn1">${E(me.name)}</div>${me.root ? `<div><span class="rzb adm">${E(me.pangkat || "ADMIN")}</span> <span class="mut">@${E(me.username)}</span></div>` : ""}</div></div>
     <div class="${good ? "rzok" : "rzerr"}" id="rzM" style="margin-top:6px">${E(msg || "")}</div>
     <details class="acc" data-s="av" ${PSEC.av || AVDR ? "open" : ""}><summary>🎨 Avatar</summary><div class="accb"><div class="row" style="margin:0 0 10px;gap:14px;flex-wrap:nowrap;align-items:flex-start">${cav && cav.t === "fig" ? `<span class="avbody" style="width:96px;height:134px;background:${AVB[fg.bg]}">${avSvg(fg, true)}</span>` : avHTML(meV, 96)}<div class="grow"><div class="mut" style="margin-bottom:8px">Reka watak sendiri, atau guna gambar dari phone.</div><div class="row" style="margin:0"><button data-z="avU">📷 Gambar sendiri</button><button data-z="avRnd">🎲 Rawak</button>${cav ? '<button class="del" data-z="avR">Reset</button>' : ""}</div></div></div>
     <input type="file" id="avF" accept="image/*" hidden>
     ${O("Kulit", "sk", AVS)}${O("Gaya rambut", "hs", ["Pendek", "Belah tepi", "Panjang", "Kerinting", "Sanggul", "Botak"])}${O("Warna rambut", "hc", AVH)}${O("Penutup kepala", "hw", ["Tiada", "Cap", "Beanie", "Tudung", "Songkok"])}${fg.hw > 0 && fg.hw < 4 ? O("Warna penutup", "wc", AVT) : ""}${O("Cermin mata", "gl", ["Tiada", "Bulat", "Segi", "Gelap"])}${O("Headphone", "hp", ["Tiada", "Ada"])}${O("Baju", "ts", ["T-shirt", "Hoodie", "Kemeja"])}${O("Warna baju", "tc", AVT)}${O("Seluar", "ps", ["Panjang", "Pendek"])}${O("Warna seluar", "pc", AVP)}${O("Latar", "bg", AVB)}<div class="avsave"><span class="mut" style="flex:1">${AVDR ? "Ada perubahan belum disimpan" : E(AVM)}</span>${AVDR ? '<button data-z="avCx">Batal</button>' : ""}<button class="pri" data-z="avS">💾 Simpan profil</button></div></div></details>
-    <details class="acc" data-s="ak" ${op("ak")}><summary>🔐 Nama & password</summary><div class="accb"><div class="mut">Tukar nama</div><div class="row" style="margin-top:4px"><input type="text" id="mNm" value="${E(me.name)}" maxlength="30" style="flex:1;margin:0"><button data-z="nm">Simpan</button></div>
-      <div class="mut" style="margin-top:12px">Tukar password</div><input type="password" id="mO" placeholder="Password lama" autocomplete="current-password"><input type="password" id="mP" placeholder="Password baru (min 6)" autocomplete="new-password"><button data-z="pw">Tukar password</button></div></details>
+    <details class="acc" data-s="ak" ${op("ak")}><summary>✏️ Nama</summary><div class="accb"><div class="mut">Tukar nama (untuk sapaan)</div><div class="row" style="margin-top:4px"><input type="text" id="mNm" value="${E(me.name)}" maxlength="30" style="flex:1;margin:0"><button data-z="nm">Simpan</button></div></div></details>
     <details class="acc" data-s="in" ${op("in")}><summary>📲 Pasang di skrin utama</summary><div class="accb"><div class="mut" style="margin-bottom:8px">Jadikan RIZTOOLS ada ikon di phone, buka terus macam app.</div><button class="pri" data-z="inst" style="width:100%">Tengok cara (iPhone &amp; Android)</button></div></details>
-    <details class="acc" data-s="bk" ${op("bk")}><summary>💾 Backup data</summary><div class="accb"><div class="mut" id="bkInfo"></div><div class="row"><button class="pri grow" data-z="bk">💾 Simpan ke peranti</button><button class="grow" data-z="bks">📤 Kongsi / hantar</button></div><div class="row" style="margin-top:0"><button class="grow" data-z="bkl">⬇️ Restore dari fail</button></div><div class="abx"><label class="cbl"><input type="checkbox" data-z="abon" ${window.abGet && abGet().on ? "checked" : ""}><span>Auto backup bila log masuk dan log keluar</span></label><label class="cbl"><input type="checkbox" data-z="abfile" ${window.abGet && abGet().file ? "checked" : ""}><span>Muat turun fail backup sekali (masa log masuk dan keluar)</span></label><button class="grow" data-z="abl" style="width:100%">↩️ Salinan automatik (pulihkan)</button></div><div class="mut" id="bkMsg" style="min-height:20px"></div><div class="mut" style="margin-top:6px">Simpan ke peranti: di PC awak boleh pilih folder. Di phone, pilih Simpan ke Fail atau Drive dalam menu yang keluar. Kongsi: terus ke WhatsApp, emel atau Drive. Backup disimpan di luar app dan bukan di cloud (cloud akan datang). Termasuk semua tool dan gambar.</div></div></details>
+    <details class="acc" data-s="bk" ${op("bk")}><summary>💾 Backup data</summary><div class="accb"><div class="mut" id="bkInfo"></div><div class="row"><button class="pri grow" data-z="bk">💾 Simpan ke peranti</button><button class="grow" data-z="bks">📤 Kongsi / hantar</button></div><div class="row" style="margin-top:0"><button class="grow" data-z="bkl">⬇️ Restore dari fail</button></div><div class="abx"><label class="cbl"><input type="checkbox" data-z="abon" ${window.abGet && abGet().on ? "checked" : ""}><span>Auto backup bila app dibuka (sekali sehari)</span></label><label class="cbl"><input type="checkbox" data-z="abfile" ${window.abGet && abGet().file ? "checked" : ""}><span>Muat turun fail backup sekali sehari</span></label><button class="grow" data-z="abl" style="width:100%">↩️ Salinan automatik (pulihkan)</button></div><div class="mut" id="bkMsg" style="min-height:20px"></div><div class="mut" style="margin-top:6px">Simpan ke peranti: di PC awak boleh pilih folder. Di phone, pilih Simpan ke Fail atau Drive dalam menu yang keluar. Kongsi: terus ke WhatsApp, emel atau Drive. Backup disimpan di luar app dan bukan di cloud (cloud akan datang). Termasuk semua tool dan gambar.</div></div></details>
     ${adm}
     <details class="acc danger" data-s="dz" ${op("dz")}><summary>⚠️ Zon bahaya</summary><div class="accb"><div class="mut" style="margin-bottom:8px">Padam semua data dalam app ni dan mula dari kosong. Perlu 5 kali pengesahan.</div><button class="rbtn" data-z="rst" style="width:100%">🗑️ Reset semua data</button></div></details>
 </div>`;
@@ -2009,7 +2009,26 @@ async function onClick(e) {
   }
 }
 
-if (CU) boot(); else seed().then(showLogin);
+/* ===== Tanpa login: sesi automatik ===== */
+function startNoLogin() {
+  if (CU) return boot();
+  const keys = Object.keys(localStorage), a = users(), cand = [];
+  a.forEach(u => { const has = u.root ? keys.some(k => k.indexOf("riztool_") === 0 || k.indexOf("sewa_") === 0) : keys.some(k => k.indexOf("rzu_" + u.id + "__") === 0); if (has) cand.push(u); });
+  const pick = u => { raw.set(SK, u.id); location.reload(); };
+  if (cand.length === 1) return pick(cand[0]);
+  document.body.classList.add("rz-locked");
+  const ov = document.createElement("div"); ov.className = "rzfull"; ov.id = "rzLogin"; document.body.appendChild(ov);
+  if (cand.length > 1) {
+    ov.innerHTML = `<div class="rzbox"><h2>🧰 RIZTOOLS</h2><div class="mut">Ada lebih satu profil dalam peranti ni. Pilih yang mana satu awak guna:</div><div style="display:grid;gap:8px;margin-top:12px">${cand.map(u => `<button type="button" data-pick="${E(u.id)}" style="display:flex;align-items:center;gap:12px;text-align:left;min-height:56px">${avHTML(u, 40)}<b>${E(u.name)}</b></button>`).join("")}</div></div>`;
+    ov.addEventListener("click", e => { const b = e.target.closest("[data-pick]"); if (b) pick(cand.find(u => u.id === b.dataset.pick)); });
+    return;
+  }
+  ov.innerHTML = `<div class="rzbox"><h2>🧰 RIZTOOLS</h2><div class="mut">Selamat datang! Siapa nama awak? Nama ni untuk sapaan sahaja.</div><form id="rzF" autocomplete="off"><input id="rzN" type="text" maxlength="30" placeholder="Nama awak" autocomplete="name"><div class="rzerr" id="rzE"></div><button class="pri" style="width:100%" type="submit">Mula guna</button></form><div class="mut" style="margin-top:12px;font-size:12px">Tak perlu daftar atau password. Data tersimpan dalam peranti ni sahaja, jadi buat backup selalu.</div></div>`;
+  $("rzN").focus();
+  $("rzF").onsubmit = e => { e.preventDefault(); const nm = $("rzN").value.trim(); if (nm.length < 2 || nm.length > 30) { $("rzE").textContent = "Nama 2-30 huruf."; return; }
+    const u = { id: uid(), username: "", name: nm, pangkat: "USER", root: false, created: Date.now() }; const l = users(); l.push(u); saveUsers(l); pick(u); };
+}
+startNoLogin();
 })();
 </script>
 </body>
