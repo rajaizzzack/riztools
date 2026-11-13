@@ -2039,7 +2039,7 @@ async function onClick(e) {
   const v = i => ($(i) ? $(i).value : "");
   if (z === "x") return $("rzPanel").remove();
   if (z === "out") return confirmLogout();
-  if (z === "inst") return window.installSheet && installSheet();
+  if (z === "inst") { const pn = $("rzPanel"); if (pn) pn.remove(); return window.installSheet && installSheet(); }
   if (z === "abon") return window.abSet("on", t.checked);
   if (z === "abfile") return window.abSet("file", t.checked);
   if (z === "abl") return window.abList && abList();
