@@ -342,6 +342,17 @@ body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-f
 .lgopt{display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 14px;margin:0 0 8px;border-radius:14px;border:1px solid var(--bd,#4443);background:transparent;color:inherit;font:600 16px system-ui,sans-serif;cursor:pointer;text-align:left}
 .lgopt.on{border-color:var(--ac,#6cf);background:rgba(120,160,255,.12)}
 .lgopt small{opacity:.6;font-weight:500}
+</style><style>
+#qaDial{position:fixed;inset:0;z-index:59;background:rgba(10,15,20,0);transition:background .25s;-webkit-tap-highlight-color:transparent}
+#qaDial.open{background:rgba(10,15,20,.45)}
+#qaDial .qdi{position:absolute;z-index:61;width:68px;height:68px;min-height:0;padding:0;border-radius:50%;border:0;background:var(--card);color:var(--tx);box-shadow:0 10px 26px rgba(0,0,0,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;opacity:0;transform:translate(0,0) scale(.2);transition:transform .38s cubic-bezier(.2,.9,.3,1.35) var(--dl),opacity .2s var(--dl)}
+#qaDial.open .qdi{opacity:1;transform:translate(var(--dx),var(--dy)) scale(1)}
+#qaDial .qdi:active{filter:brightness(.92)}
+#qaDial .qdi i{font-style:normal;font-size:24px;line-height:1}
+#qaDial .qdi span{font-size:11px;font-weight:700}
+#nav .navadd b{transition:transform .3s cubic-bezier(.2,.9,.3,1.3)}
+body.dial-open #nav .navadd b{transform:rotate(45deg)}
+@media(prefers-reduced-motion:reduce){#qaDial .qdi{transition:opacity .1s}}
 </style></head>
 <body class="rz-locked">
 <main>
@@ -470,6 +481,23 @@ function todaySheet() {
     <h3>💳 Bil belum bayar</h3><div class="card">${row("bil", '<span class="ic" style="background:var(--in)">💳</span>', unpaid ? unpaid + " bil belum bayar" : "Semua dah bayar ✅", unpaid ? `<b class="owe">${fmt(left)}</b>` : "")}</div>
     <h3>🤝 Hutang member nak kutip</h3><div class="card">${hut}</div>`);
 }
+function closeDial() {
+  const d = document.getElementById("qaDial"); if (!d) return;
+  document.body.classList.remove("dial-open"); d.classList.remove("open"); setTimeout(() => d.remove(), 260);
+}
+function toggleDial() {
+  if (document.getElementById("qaDial")) return closeDial();
+  const btn = document.querySelector("#nav .navadd"); if (!btn) return addSheet("bel");
+  const r = btn.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2, R = 104;
+  const d = document.createElement("div"); d.id = "qaDial"; d.setAttribute("role", "menu");
+  const items = [["hut", "🤝", "Hutang", 142], ["bel", "💸", "Belanja", 90], ["claim", "🧾", "Claim", 38]];
+  d.innerHTML = items.map((it, i) => { const ang = it[3] * Math.PI / 180, dx = Math.round(R * Math.cos(ang)), dy = Math.round(-R * Math.sin(ang) - (i === 1 ? 6 : 0));
+    return `<button class="qdi" role="menuitem" data-qd="${it[0]}" style="left:${Math.round(cx - 34)}px;top:${Math.round(cy - 34)}px;--dx:${dx}px;--dy:${dy}px;--dl:${i * 55}ms"><i>${it[1]}</i><span>${it[2]}</span></button>`; }).join("");
+  d.addEventListener("click", e => { const b = e.target.closest("[data-qd]"); sfx("tick"); closeDial(); if (b) setTimeout(() => addSheet(b.dataset.qd), 120); });
+  document.body.appendChild(d); document.body.classList.add("dial-open");
+  requestAnimationFrame(() => requestAnimationFrame(() => d.classList.add("open")));
+}
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeDial(); });
 function addSheet(tab) {
   const old = document.getElementById("qaSheet"); let ov = old;
   if (!ov) { ov = sheet(""); ov.id = "qaSheet"; ov.firstElementChild.classList.add("qa"); }
@@ -1238,7 +1266,7 @@ document.addEventListener("click", e => {
   if (a === "inst_x") { try { localStorage.setItem("rz_inst_x", "1"); } catch (e) {} instBn(); return; }
   if (a === "nav_more") { sfx("tick"); moreSheet(); return; }
   if (a === "nav_today") { sfx("tick"); todaySheet(); return; }
-  if (a === "nav_add") { sfx("tick"); addSheet("bel"); return; }
+  if (a === "nav_add") { sfx("tick"); toggleDial(); return; }
   if (a === "nav_share") { sfx("tick"); shareSheet(); return; }
   if (a.indexOf("sh_") === 0) { shAct(a); return; }
   if (a.indexOf("bk_") === 0) { bkAct(a); return; }
