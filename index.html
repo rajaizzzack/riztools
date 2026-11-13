@@ -348,7 +348,7 @@ body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-f
 #qaDial.open{background:rgba(10,15,20,.45)}
 #qaDial .qdi{position:absolute;z-index:61;width:68px;height:68px;min-height:0;padding:0;border-radius:50%;border:0;background:var(--card);color:var(--tx);box-shadow:0 10px 26px rgba(0,0,0,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;opacity:0;transform:translate(0,0) scale(.2);transition:transform .38s cubic-bezier(.2,.9,.3,1.35) var(--dl),opacity .2s var(--dl)}
 #qaDial.open .qdi{opacity:1;transform:translate(var(--dx),var(--dy)) scale(1)}
-#qaDial .qdi:active{filter:brightness(.92)}#qaDial .qdi.hot{transform:translate(var(--dx),var(--dy)) scale(1.18);box-shadow:0 12px 30px rgba(0,0,0,.4),0 0 0 3px var(--ac)}#nav .navadd{touch-action:none}
+#qaDial .qdedit.hot{transform:scale(1.25);box-shadow:0 0 0 3px var(--ac)}#qaDial .qdi:active{filter:brightness(.92)}#qaDial .qdi.hot{transform:translate(var(--dx),var(--dy)) scale(1.18);box-shadow:0 12px 30px rgba(0,0,0,.4),0 0 0 3px var(--ac)}#nav .navadd{touch-action:none}
 #qaDial .qdedit{position:absolute;z-index:61;width:40px;height:40px;min-height:0;padding:0;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:#0f172a;font-size:18px;line-height:1;opacity:0;transition:opacity .3s .25s}#qaDial.open .qdedit{opacity:1}
 #qaDial .qdi i{font-style:normal;font-size:24px;line-height:1}
 #qaDial .qdi span{font-size:11px;font-weight:700}
@@ -581,14 +581,14 @@ function toggleDial() {
   d.innerHTML = items.map((it, i) => { const pc = innerWidth >= 900, ang = it[3] * Math.PI / 180, dx = pc ? (i - 1) * 140 : Math.round(R * Math.cos(ang)), dy = pc ? -118 : Math.round(-R * Math.sin(ang) - (i === 1 ? 6 : 0));
     return `<button class="qdi" role="menuitem" data-qd="${it[0]}" style="left:${Math.round(cx - 34)}px;top:${Math.round(cy - 34)}px;--dx:${dx}px;--dy:${dy}px;--dl:${i * 55}ms" data-tx="${Math.round(cx + dx)}" data-ty="${Math.round(cy + dy)}"><i>${it[1]}</i><span>${it[2]}</span></button>`; }).join("");
   d.addEventListener("click", e => { const b = e.target.closest("[data-qd]"); sfx("tick"); closeDial(); if (b) setTimeout(() => qaGo(b.dataset.qd), 120); });
-  d.insertAdjacentHTML("beforeend", `<button class="qdedit" data-qe="1" aria-label="Ubah pintasan" title="Ubah pintasan" style="left:${Math.round(cx - 20)}px;top:${Math.round(cy - (innerWidth >= 900 ? 118 + 80 : R + 98))}px">✏️</button>`);
+  d.insertAdjacentHTML("beforeend", `<button class="qdedit" data-qe="1" data-tx="${Math.round(cx)}" data-ty="${Math.round(cy - (innerWidth >= 900 ? 118 + 80 : R + 98) + 20)}" aria-label="Ubah pintasan" title="Ubah pintasan" style="left:${Math.round(cx - 20)}px;top:${Math.round(cy - (innerWidth >= 900 ? 118 + 80 : R + 98))}px">✏️</button>`);
   document.body.appendChild(d); document.body.classList.add("dial-open");
   requestAnimationFrame(() => requestAnimationFrame(() => d.classList.add("open")));
 }
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeDial(); });
 (function () {
   let st = null, swallow = false;
-  const hot = (x, y) => { let best = null, bd = 52; document.querySelectorAll("#qaDial .qdi").forEach(b => { const d = Math.hypot(x - +b.dataset.tx, y - +b.dataset.ty); const on = d < bd; if (on) { bd = d; best = b; } b.classList.remove("hot"); }); if (best) best.classList.add("hot"); return best; };
+  const hot = (x, y) => { let best = null, bd = 52; document.querySelectorAll("#qaDial .qdi,#qaDial .qdedit").forEach(b => { const d = Math.hypot(x - +b.dataset.tx, y - +b.dataset.ty); const on = d < (b.dataset.qe ? 40 : 52) && d < bd; if (on) { bd = d; best = b; } b.classList.remove("hot"); }); if (best) best.classList.add("hot"); return best; };
   document.addEventListener("pointerdown", e => { const b = e.target.closest && e.target.closest("#nav .navadd"); if (!b) return; st = { x: e.clientX, y: e.clientY, drag: false, id: e.pointerId }; }, true);
   document.addEventListener("pointermove", e => {
     if (!st || e.pointerId !== st.id) return;
@@ -603,7 +603,7 @@ document.addEventListener("keydown", e => { if (e.key === "Escape") closeDial();
     swallow = true; setTimeout(() => { swallow = false; }, 400);
     if (e.type === "pointercancel") return;
     const it = hot(e.clientX, e.clientY);
-    if (it) { sfx("tick"); const k = it.dataset.qd; closeDial(); setTimeout(() => qaGo(k), 120); }
+    if (it) { sfx("tick"); const k = it.dataset.qd; closeDial(); setTimeout(() => (it.dataset.qe ? qaCfg() : qaGo(k)), 120); }
   };
   document.addEventListener("pointerup", end, true); document.addEventListener("pointercancel", end, true);
   document.addEventListener("click", e => { if (swallow && e.target.closest && e.target.closest("#nav .navadd")) { e.stopPropagation(); e.preventDefault(); swallow = false; } }, true);
@@ -2730,7 +2730,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 /* ===== KEMAS KINI APP ===== */
 (function(){
 "use strict";
-var VER="2026111415",last=0,shown=false;
+var VER="2026111416",last=0,shown=false;
 try{if(location.search.indexOf("v=")>=0&&history.replaceState)history.replaceState(null,"",location.pathname+location.hash);}catch(e){}
 function css(){
   if(document.getElementById("updCss"))return;
