@@ -2337,7 +2337,7 @@ zKend = function () {
       return `<div class="card kv"><div class="kvh">${ico2(v.name)}<div class="grow" style="min-width:0"><b>${esc(v.name || "Kenderaan")}</b><div class="mut">${esc(v.plate || "Tiada no. plat")} · ${v.odo ? v.odo + " km" : "odometer belum diisi"}</div></div></div>
       <div class="kst"><div class="kch"><span>🛢️ Minyak</span>${oil}</div><div class="kch"><span>📄 Road tax</span>${v.rt ? zb(v.rt) : '<span class="mut">belum diisi</span>'}</div></div>
       <div class="mut">Kos bulan ni <b>${fmt(mc)}</b> · Jumlah direkod <b>${fmt(tc)}</b></div>
-      <div class="hr2" style="margin-top:10px"><button class="pri" data-act="v_ksvc" data-i="${v.id}">＋ Servis / repair</button><button data-act="z_oil" data-i="${v.id}">🛢️ Dah tukar minyak</button></div>
+      <div class="hr2" style="margin-top:10px"><button class="pri" data-act="v_ksvc" data-i="${v.id}">＋ Servis / repair</button><button data-act="v_ksvc" data-i="${v.id}" data-j="Tukar minyak hitam">🛢️ Dah tukar minyak</button><button data-act="v_ksvc" data-i="${v.id}" data-j="Road tax & insurans">📄 Dah renew road tax</button></div>
       <details class="kd" data-nd="kv-${v.id}" ${op("kv-" + v.id)}><summary>🧾 Rekod servis (${L.length})</summary>${L.length ? Object.keys(grp).sort().reverse().map(m => `<div class="kmh"><span>${m ? ymLabel(m) : "Tanpa tarikh"}</span><b>${fmt(grp[m].reduce((a, x) => a + (+x.kos || 0), 0))}</b></div>` + grp[m].map(x => `<div class="hrow"><span class="nm">${esc(x.jenis)}<div class="mut">${x.date ? dFmt(x.date) : "-"}${x.odo ? " · " + x.odo + " km" : ""}${x.note ? " · " + esc(x.note) : ""}</div></span><b>${x.kos ? fmt(x.kos) : "-"}</b><button class="del ghost" data-act="z_dellog" data-i="${v.id}" data-l="${x.id}">✕</button></div>`).join("")).join("") : '<div class="mut" style="padding:6px 0">Belum ada rekod.</div>'}</details>
       <details class="kd" data-nd="ke-${v.id}" ${op("ke-" + v.id)}><summary>✏️ Ubah maklumat</summary><div class="frm" style="margin-top:8px"><div class="g2"><label class="mut">Nama<input ${k(v.id, "name")} value="${esc(v.name)}"></label><label class="mut">No. plat<input ${k(v.id, "plate")} value="${esc(v.plate)}"></label></div>
       <div class="g2"><label class="mut">Odometer (km)<input type="number" inputmode="numeric" ${k(v.id, "odo")} value="${v.odo || ""}"></label><label class="mut">Selang minyak (km)<input type="number" inputmode="numeric" ${k(v.id, "oilInt")} value="${v.oilInt || 5000}"></label></div>
@@ -2346,23 +2346,24 @@ zKend = function () {
     }).join("") + `<button data-act="z_add" data-k="kv">＋ Tambah kenderaan</button>
     <details class="card kd" data-nd="kset" ${op("kset")}><summary>⚙️ Lesen &amp; tetapan</summary><div class="frm" style="margin-top:8px"><div class="hr2"><b>🪪 Lesen memandu tamat</b>${lic}</div><input type="date" data-f="z_set" data-k="lic" value="${esc(Z.lic)}"><label class="cbl"><input type="checkbox" data-f="z_set" data-k="syncK" ${Z.syncK ? "checked" : ""}><span>Sync ke Bil bila due date dalam bulan ni</span></label></div></details>`;
 };
-function nSvcSheet(vid) {
-  const v = Z.kv.find(x => x.id === vid); if (!v) return; const J = ["Tukar minyak hitam", "Servis besar", "Tayar", "Brek", "Bateri", "Rantai / tali", "Lain-lain"];
+function nSvcSheet(vid, pre) {
+  const v = Z.kv.find(x => x.id === vid); if (!v) return; const J = ["Tukar minyak hitam", "Road tax & insurans", "Servis besar", "Tayar", "Brek", "Bateri", "Rantai / tali", "Lain-lain"];
   const ov = sheet(shHead("Servis / repair") + `<div class="mut" style="margin-bottom:8px">${esc(v.name)}</div><div class="chips" style="margin-bottom:10px">${J.map(j => `<button class="chip" data-kj="${esc(j)}">${j}</button>`).join("")}</div>
   <div class="frm"><input id="ks_j" placeholder="Servis / repair apa?"><div class="g2"><label class="mut">Tarikh<input type="date" id="ks_d" value="${today()}"></label><label class="mut">Odometer (km)<input type="number" inputmode="numeric" id="ks_o" value="${v.odo || ""}"></label></div><label class="mut">Kos (RM)<input type="number" step="0.01" inputmode="decimal" id="ks_k" placeholder="0"></label><input id="ks_n" placeholder="Catatan (tak wajib)"><button class="pri" data-ks="save" style="min-height:46px">＋ Simpan</button><div class="mut" id="ks_m">Kos dikira dalam Bajet Bulanan ikut tarikh yang dipilih.</div></div>`);
   const g = id => ov.querySelector("#" + id);
+  if (pre) { g("ks_j").value = pre; ov.querySelectorAll("[data-kj]").forEach(b => b.classList.toggle("on", b.dataset.kj === pre)); if (/road tax/i.test(pre) && +v.rtAmt) g("ks_k").value = v.rtAmt; }
   ov.addEventListener("click", e => {
     const c = e.target.closest("[data-kj]"); if (c) { sfx("tick"); ov.querySelectorAll("[data-kj]").forEach(b => b.classList.toggle("on", b === c)); g("ks_j").value = c.dataset.kj; g("ks_k").focus(); return; }
     if (!e.target.closest('[data-ks="save"]')) return;
     const j = g("ks_j").value.trim(), d = g("ks_d").value || today(), o = num(g("ks_o").value), kos = num(g("ks_k").value);
     if (!j) { g("ks_m").textContent = "Isi atau pilih jenis servis."; g("ks_m").style.color = "var(--bad)"; g("ks_j").focus(); return; }
     v.log.push({ id: uid(), date: d, odo: o || "", jenis: j, kos, note: g("ks_n").value.trim() });
-    if (o > (+v.odo || 0)) v.odo = o; if (/minyak hitam/i.test(j) && (o || v.odo)) v.oilOdo = o || v.odo;
+    if (o > (+v.odo || 0)) v.odo = o; if (/minyak hitam/i.test(j) && (o || v.odo)) v.oilOdo = o || v.odo; if (/road tax|insurans/i.test(j)) { const n = (+d.slice(0, 4) + 1) + d.slice(4); if (!v.rt || n > v.rt) v.rt = n; if (kos) v.rtAmt = kos; }
     zsave(); zRender(); sfx("pay"); ov.remove();
   });
   ov.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.matches("input")) { const b = ov.querySelector('[data-ks="save"]'); if (b) b.click(); } });
 }
-document.addEventListener("click", e => { const t = e.target.closest('[data-act="v_ksvc"]'); if (!t) return; e.stopImmediatePropagation(); e.preventDefault(); sfx("tick"); nSvcSheet(t.dataset.i); }, true);
+document.addEventListener("click", e => { const t = e.target.closest('[data-act="v_ksvc"]'); if (!t) return; e.stopImmediatePropagation(); e.preventDefault(); sfx("tick"); nSvcSheet(t.dataset.i, t.dataset.j); }, true);
 try { zRender(); } catch (e) { console.error(e); }
 </script>
 <script type="text/rz-app">
@@ -2963,7 +2964,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 /* ===== KEMAS KINI APP ===== */
 (function(){
 "use strict";
-var VER="2026111421",last=0,shown=false;
+var VER="2026111422",last=0,shown=false;
 try{if(location.search.indexOf("v=")>=0&&history.replaceState)history.replaceState(null,"",location.pathname+location.hash);}catch(e){}
 function css(){
   if(document.getElementById("updCss"))return;
