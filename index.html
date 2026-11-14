@@ -1572,11 +1572,29 @@ const zdef = () => ({ syncK: true, syncH: true, lic: "", kv: [zvnew("Kereta"), z
   baj: { gaji: 0, extra: [], m: {}, sync: { bil: true, sewa: true, lang: true, bel: true }, me: "" },
   sel: { hm: "0", bm: nowYM(), bd: today(), bc: "Makan", ba: "", bn: "", hn: "", ha: "", ht: "" } });
 var Z;
+
+/* Pembersih data: elak halaman rosak jika data tak lengkap */
+const nObj = x => x && typeof x === "object";
+const nArr = (o, k, f) => { if (!Array.isArray(o[k])) o[k] = []; o[k] = o[k].filter(f || nObj); return o[k]; };
+const nStr = (x, d) => typeof x === "string" ? x : d;
+function nSan() {
+  if (!nObj(Z)) return; const d = today();
+  nArr(Z, "kv").forEach(v => { v.name = nStr(v.name, "Kenderaan"); v.plate = nStr(v.plate, ""); v.rt = nStr(v.rt, ""); nArr(v, "log").forEach(x => { x.date = nStr(x.date, d); x.jenis = nStr(x.jenis, "Servis"); x.kos = +x.kos || 0; }); });
+  ["bel", "inc", "fuel"].forEach(k => nArr(Z, k).forEach(x => { x.date = nStr(x.date, d); x.amt = +x.amt || 0; if (x.id == null) x.id = uid(); }));
+  nArr(Z, "hut").forEach(h => { h.name = nStr(h.name, "Tanpa nama"); h.amt = +h.amt || 0; h.paid = +h.paid || 0; h.date = nStr(h.date, d); if (h.id == null) h.id = uid(); });
+  nArr(Z, "lang").forEach(s => { s.name = nStr(s.name, "Langganan"); s.amt = +s.amt || 0; });
+  nArr(Z, "g").forEach(g => { g.name = nStr(g.name, "Sasaran"); g.target = +g.target || 0; nArr(g, "log").forEach(x => { x.date = nStr(x.date, d); x.amt = +x.amt || 0; }); });
+  if (nObj(Z.inv)) nArr(Z.inv, "list").forEach(i => { i.date = nStr(i.date, d); nArr(i, "items").forEach(x => { x.q = +x.q || 0; x.p = +x.p || 0; }); });
+  if (nObj(Z.ot)) nArr(Z.ot, "log").forEach(x => { x.date = nStr(x.date, d); x.h = +x.h || 0; x.m = +x.m || 1; });
+  if (nObj(Z.baj)) { Z.baj.m = nObj(Z.baj.m) ? Z.baj.m : {}; Object.keys(Z.baj.m).forEach(k => { const m = Z.baj.m[k]; if (!nObj(m)) { delete Z.baj.m[k]; return; } nArr(m, "extra").forEach(x => { x.name = nStr(x.name, ""); x.amt = +x.amt || 0; }); }); }
+  if (nObj(H) && Array.isArray(H.items)) H.items = H.items.filter(nObj).map(i => Object.assign(i, { name: nStr(i.name, ""), amt: +i.amt || 0 }));
+}
 function zFix() {
   const d = zdef(); if (!Z || !Z.kv) Z = d;
   Object.keys(d).forEach(k => { if (Z[k] == null) Z[k] = d[k]; });
   Z.kv.forEach(v => { if (v.ins) { if (!v.rt || v.ins < v.rt) v.rt = v.ins; } delete v.ins; });
   Z.sel = Object.assign({}, d.sel, Z.sel); Z.baj = Object.assign({}, d.baj, Z.baj); Z.baj.sync = Object.assign({}, d.baj.sync, Z.baj.sync);
+  try { nSan(); } catch (e) { console.error(e); }
 }
 try { Z = JSON.parse(localStorage.getItem(ZK)); } catch (e) { Z = null; }
 zFix();
@@ -1903,6 +1921,8 @@ body:has(.rov.pg) #nav button.on:not(.pgon){background:transparent!important;box
 @media(prefers-reduced-motion:reduce){#nav button b{animation:none!important}}
 #backBtn{display:none!important}
 #shareFab{left:auto!important;right:14px}@media(min-width:900px){#shareFab{right:max(16px,calc(50% - 560px))!important}}
+body:has(#home[hidden]) #shareFab{display:none!important}
+#shareFab{transition:opacity .25s,transform .1s}#shareFab.sc{opacity:.15;pointer-events:none}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .pbar{height:10px;border-radius:6px;background:var(--in);overflow:hidden;margin:8px 0 2px}.pbar i{display:block;height:100%;background:var(--ac);border-radius:6px;transition:width .5s}
 .gbtn{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:12px;background:var(--in);cursor:pointer;font-weight:600}
@@ -2987,7 +3007,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 /* ===== KEMAS KINI APP ===== */
 (function(){
 "use strict";
-var VER="2026111436",NOTES=[{"v":"2026111436","t":"Butang kongsi di kanan bawah","l":["Butang kongsi dipindah ke sudut kanan bawah"]}],last=0,shown=false,SK="rz_seenver",DK="rz_updskip";
+var VER="2026111437",NOTES=[{"v":"2026111437","t":"Pemeriksaan penuh & pembaikan","l":["Data yang tak lengkap atau rosak tak lagi menyebabkan halaman kosong","Butang kongsi hanya di halaman utama dan pudar bila skrol supaya tak menutup kandungan","Semua halaman diuji pada telefon, tablet dan PC, mod cerah dan gelap"]}],last=0,shown=false,SK="rz_seenver",DK="rz_updskip";
 var ls={g:function(k){try{return localStorage.getItem(k);}catch(e){return null;}},s:function(k,v){try{localStorage.setItem(k,v);}catch(e){}}};
 try{if(location.search.indexOf("v=")>=0&&history.replaceState)history.replaceState(null,"",location.pathname+location.hash);}catch(e){}
 function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
@@ -3076,6 +3096,9 @@ window.addEventListener("online",function(){last=0;setTimeout(check,500);});
 setInterval(function(){if(!document.hidden)check();},300000);
 window.RZUPD={news:news,bell:bell,check:function(){last=0;check();},ver:VER,notes:function(){var L=NOTES.slice(0,8);sheet("✨ Apa yang baru","Pembaharuan terkini",L,'<button class="go" data-u="close">Tutup</button>');}};
 })();
+/* ---- Butang kongsi pudar semasa skrol ---- */
+(function(){var f=null,t=0;window.addEventListener("scroll",function(){if(!f)f=document.getElementById("shareFab");if(!f)return;f.classList.add("sc");clearTimeout(t);t=setTimeout(function(){f.classList.remove("sc");},600);},{passive:true});})();
+
 /* ---- Install app terus (Android / Chrome) ---- */
 (function(){
 var ev=null,orig=null;
