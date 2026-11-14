@@ -433,7 +433,8 @@ main.sw-out{transition:transform .42s ease,opacity .42s ease;transform:scale(.97
 <div class="top"><h1 id="appT" class="home"><span class="lg">🧰</span><span class="brand">RIZTOOLS</span><span class="myf"><svg viewBox="0 0 28 14" aria-label="Bendera Malaysia" role="img"><rect y="0" width="28" height="1" fill="#cc0001"/><rect y="1" width="28" height="1" fill="#fff"/><rect y="2" width="28" height="1" fill="#cc0001"/><rect y="3" width="28" height="1" fill="#fff"/><rect y="4" width="28" height="1" fill="#cc0001"/><rect y="5" width="28" height="1" fill="#fff"/><rect y="6" width="28" height="1" fill="#cc0001"/><rect y="7" width="28" height="1" fill="#fff"/><rect y="8" width="28" height="1" fill="#cc0001"/><rect y="9" width="28" height="1" fill="#fff"/><rect y="10" width="28" height="1" fill="#cc0001"/><rect y="11" width="28" height="1" fill="#fff"/><rect y="12" width="28" height="1" fill="#cc0001"/><rect y="13" width="28" height="1" fill="#fff"/><rect width="14" height="8" fill="#010066"/><circle cx="5" cy="4" r="3" fill="#fc0"/><circle cx="5.95" cy="4" r="2.45" fill="#010066"/><polygon points="9.60,1.30 9.86,2.88 10.77,1.57 10.32,3.10 11.71,2.32 10.64,3.50 12.23,3.40 10.75,4.00 12.23,4.60 10.64,4.50 11.71,5.68 10.32,4.90 10.77,6.43 9.86,5.12 9.60,6.70 9.34,5.12 8.43,6.43 8.88,4.90 7.49,5.68 8.56,4.50 6.97,4.60 8.45,4.00 6.97,3.40 8.56,3.50 7.49,2.32 8.88,3.10 8.43,1.57 9.34,2.88" fill="#fc0"/></svg></span></h1><span class="grow"></span><button id="backBtn" class="ghost" data-act="home" hidden>← Menu</button><button id="langBtn" class="ghost" data-lang-open="1" data-notr="1" aria-label="Language" title="Bahasa / Language"><span aria-hidden="true">🌐</span><b id="langCode">MS</b></button><button id="sndBtn" class="ghost" data-act="sound"></button></div>
 
 <section id="home">
-  <div class="card localbn" role="note"><span class="lbic">💾</span><div class="grow"><b>Simpanan local sahaja, bukan cloud</b><div class="mut">Data kekal dalam peranti ni, bukan di cloud kami. Buat backup ke Drive sendiri atau simpan fail, jadi buat backup selalu.</div></div><button class="ghost lbbtn" data-act="nav_profile">Backup</button></div>
+  <div id="newsCard" class="card newsc" hidden></div>
+  <div class="card localbn" role="note"><span class="lbic">💾</span><div class="grow"><b>Simpanan local sahaja, bukan cloud</b><div class="mut">Data dalam peranti ni sahaja. Buat backup selalu.</div></div><button class="ghost lbbtn" data-act="nav_profile">Backup</button></div>
   <div id="instBn" class="card instbn" hidden><span class="instic">📲</span><div class="grow"><b>Pasang di skrin utama</b><div class="mut">Buka terus macam app, tanpa buka browser.</div></div><button class="pri" data-act="inst">Cara</button><button class="ghost instx" data-act="inst_x" aria-label="Tutup">✕</button></div>
   <div id="todayCard"></div>
   <div id="zRem"></div>
@@ -1880,6 +1881,8 @@ function startReset() {
 .kv .kvh{display:flex;gap:12px;align-items:center;margin-bottom:10px}.kv .kst{display:grid;gap:6px;margin:0 0 10px}.kv .kch{display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--in);border-radius:12px;padding:8px 12px;font-size:14px}
 details.kd>summary{cursor:pointer;list-style:none;min-height:40px;display:flex;align-items:center;font-weight:600;border-top:1px solid var(--bd);margin-top:10px;padding-top:6px}details.kd>summary::-webkit-details-marker{display:none}details.card.kd>summary{border-top:0;margin-top:0;padding-top:0}
 .kmh{display:flex;justify-content:space-between;margin:12px 0 2px;font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.04em}.kmh b{color:var(--tx)}
+.newsc{padding:12px 14px;margin-bottom:10px;background:linear-gradient(135deg,var(--card),var(--in));border:1px solid var(--ac,#0f766e)}.newsc[hidden]{display:none}.newsc .nh{display:flex;align-items:center;gap:8px}.newsc .nh b{flex:1;font-size:15px}.newsc .nv{font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--ac,#0f766e);color:#fff}.newsc ul{margin:8px 0 0;padding-left:18px;font-size:13px}.newsc li{margin:2px 0}.newsc .nx{min-height:32px;width:32px;padding:0}
+.localbn,.instbn{padding:7px 10px !important;margin-bottom:8px !important}.instbn .instic{font-size:20px}.instbn .pri{min-height:34px !important}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .pbar{height:10px;border-radius:6px;background:var(--in);overflow:hidden;margin:8px 0 2px}.pbar i{display:block;height:100%;background:var(--ac);border-radius:6px;transition:width .5s}
 .gbtn{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:12px;background:var(--in);cursor:pointer;font-weight:600}
@@ -2964,7 +2967,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 /* ===== KEMAS KINI APP ===== */
 (function(){
 "use strict";
-var VER="2026111424",NOTES=[{"v":"2026111424","t":"Notis kemas kini tak berulang lagi","l":["Kalau kemas kini sudah ditekan, notis tak muncul berulang kali","Cache lama dibersihkan sepenuhnya semasa kemas kini"]}],last=0,shown=false,SK="rz_seenver",DK="rz_updskip";
+var VER="2026111425",NOTES=[{"v":"2026111425","t":"Kad Terbaru di halaman utama","l":["Apa yang baru kini ditunjuk di atas halaman utama","Halaman utama lebih kemas: notis simpanan dan pasang app dikecilkan"]}],last=0,shown=false,SK="rz_seenver",DK="rz_updskip";
 var ls={g:function(k){try{return localStorage.getItem(k);}catch(e){return null;}},s:function(k,v){try{localStorage.setItem(k,v);}catch(e){}}};
 try{if(location.search.indexOf("v=")>=0&&history.replaceState)history.replaceState(null,"",location.pathname+location.hash);}catch(e){}
 function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
@@ -3022,9 +3025,17 @@ function after(){
   var L=since(seen,VER);if(!L.length)return;
   setTimeout(function(){sheet("✨ Baru dikemas kini","Ini yang berubah",L,'<button class="go" data-u="close">Okay, faham</button>');},1800);
 }
+function news(){
+  var el=document.getElementById("newsCard");if(!el||!NOTES.length)return;
+  var n=NOTES[0];if(ls.g("rz_newsx")===String(n.v)){el.hidden=true;return;}
+  el.innerHTML='<div class="nh"><span>✨</span><b>'+esc(n.t)+'</b><span class="nv">Baru</span><button class="ghost nx" data-u="nx" aria-label="Tutup">✕</button></div><ul>'+(n.l||[]).map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul>';
+  el.hidden=false;
+  if(!el._b){el._b=1;el.addEventListener("click",function(e){if(e.target.closest('[data-u="nx"]')){ls.s("rz_newsx",String(n.v));el.hidden=true;}});}
+}
+news();
 setTimeout(check,3000);setTimeout(after,600);
 document.addEventListener("visibilitychange",function(){if(!document.hidden)setTimeout(check,800);});
-window.RZUPD={check:function(){last=0;check();},ver:VER,notes:function(){var L=NOTES.slice(0,8);sheet("✨ Apa yang baru","Pembaharuan terkini",L,'<button class="go" data-u="close">Tutup</button>');}};
+window.RZUPD={news:news,check:function(){last=0;check();},ver:VER,notes:function(){var L=NOTES.slice(0,8);sheet("✨ Apa yang baru","Pembaharuan terkini",L,'<button class="go" data-u="close">Tutup</button>');}};
 })();
 
 
