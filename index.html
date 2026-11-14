@@ -6,6 +6,11 @@
 <title>RIZTOOLS</title>
 <meta name="theme-color" content="#0f766e">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="RIZTOOLS">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="icon" type="image/png" href="apple-touch-icon.png">
 <style>
 :root{--bg:#f6f7f9;--card:#fff;--tx:#1b1f24;--mut:#6b7280;--bd:#e6e9ed;--ac:#0f766e;--ok:#15803d;--okbg:#dcfce7;--bad:#b91c1c;--badbg:#fee2e2;--in:#f3f4f6;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -2730,7 +2735,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 /* ===== KEMAS KINI APP ===== */
 (function(){
 "use strict";
-var VER="2026111416",last=0,shown=false;
+var VER="2026111417",last=0,shown=false;
 try{if(location.search.indexOf("v=")>=0&&history.replaceState)history.replaceState(null,"",location.pathname+location.hash);}catch(e){}
 function css(){
   if(document.getElementById("updCss"))return;
@@ -2895,5 +2900,6 @@ document.addEventListener("change",function(e){
 })();
 
 </script>
+<script>try{if("serviceWorker"in navigator&&(location.protocol==="https:"||location.hostname==="localhost")){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}}catch(e){}</script>
 </body>
 </html>
