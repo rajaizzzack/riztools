@@ -2997,11 +2997,11 @@ function show(v,remote){
   var L=remote&&remote.length?remote.filter(function(n){return Number(n.v)>Number(VER);}).sort(function(x,y){return Number(y.v)-Number(x.v);}).slice(0,1):[];
   try{if(window.sfx)sfx("fan");}catch(e){}
   var d=document.createElement("div");d.id="updBar";d.setAttribute("role","status");
-  d.innerHTML='<span>🔔 Ada versi baru'+''+'</span>'+(L.length?'<button class="ul" data-u="info">Apa baru?</button>':'')+'<button data-u="go">Kemas kini</button><button class="ux" data-u="x" aria-label="Tutup">✕</button>';
+  d.innerHTML='<span>🔔 Ada versi baru'+''+'</span>'+(L.length?'<button data-u="info">Apa yang baru?</button>':'<button data-u="go">Kemas kini</button>')+'<button class="ux" data-u="x" aria-label="Tutup">✕</button>';
   d.addEventListener("click",function(e){
     var b=e.target.closest("[data-u]");if(!b)return;var k=b.getAttribute("data-u");
     if(k==="x"){ls.s(DK,v+"|"+Date.now());d.remove();return;}
-    if(k==="info"){var o=sheet("✨ Apa yang baru","Pembaharuan terbaru",L,'<button data-u="close">Nanti</button><button class="go" data-u="go2">Kemas kini sekarang</button>');o.addEventListener("click",function(ev){var g=ev.target.closest('[data-u="go2"]');if(g)go(v,g);});return;}
+    if(k==="info"){var o=sheet("✨ Apa yang baru","Baca dulu, kemudian kemas kini",L,'<button data-u="close">Nanti</button><button class="go" data-u="go2">Kemas kini sekarang</button>');o.addEventListener("click",function(ev){var g=ev.target.closest('[data-u="go2"]');if(g)go(v,g);});return;}
     go(v,b);
   });
   document.body.appendChild(d);
@@ -3026,6 +3026,7 @@ setTimeout(check,3000);setTimeout(after,600);
 document.addEventListener("visibilitychange",function(){if(!document.hidden)setTimeout(check,800);});
 window.RZUPD={check:function(){last=0;check();},ver:VER,notes:function(){var L=NOTES.slice(0,8);sheet("✨ Apa yang baru","Pembaharuan terkini",L,'<button class="go" data-u="close">Tutup</button>');}};
 })();
+
 
 
 
