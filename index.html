@@ -2968,7 +2968,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 /* ===== KEMAS KINI APP ===== */
 (function(){
 "use strict";
-var VER="2026111428",NOTES=[{"v":"2026111428","t":"Label versi lebih lengkap","l":["Di bawah RIZTOOLS kini tertulis nombor versi, build dan tarikh kemas kini"]}],last=0,shown=false,SK="rz_seenver",DK="rz_updskip";
+var VER="2026111429",NOTES=[{"v":"2026111429","t":"Semakan update lebih pantas di iPhone","l":["App semak versi baru setiap kali dibuka semula dari latar belakang","Tak perlu tutup dan buka app lagi untuk nampak notis kemas kini"]}],last=0,shown=false,SK="rz_seenver",DK="rz_updskip";
 var ls={g:function(k){try{return localStorage.getItem(k);}catch(e){return null;}},s:function(k,v){try{localStorage.setItem(k,v);}catch(e){}}};
 try{if(location.search.indexOf("v=")>=0&&history.replaceState)history.replaceState(null,"",location.pathname+location.hash);}catch(e){}
 function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
@@ -3011,7 +3011,7 @@ function show(v,remote){
   document.body.appendChild(d);
 }
 function check(){
-  var now=Date.now();if(now-last<600000)return;last=now;
+  var now=Date.now();if(now-last<60000)return;last=now;
   if(location.protocol==="file:")return;
   try{
     fetch("version.json?t="+now,{cache:"no-store"}).then(function(r){return r.ok?r.json():null;}).then(function(j){
@@ -3046,7 +3046,13 @@ function vtag(){var e=document.getElementById("verTag");if(!e)return;var M=["Jan
 function news(){dot();vtag();}
 news();
 setInterval(dot,5000);setTimeout(dot,2500);setTimeout(check,3000);setTimeout(after,600);
-document.addEventListener("visibilitychange",function(){if(!document.hidden)setTimeout(check,800);});
+var hid=0;
+function wake(){var g=hid&&Date.now()-hid>15000;hid=0;if(g)last=0;setTimeout(check,500);}
+document.addEventListener("visibilitychange",function(){if(document.hidden)hid=Date.now();else wake();});
+window.addEventListener("pageshow",function(){hid=hid||Date.now()-20000;wake();});
+window.addEventListener("focus",function(){wake();});
+window.addEventListener("online",function(){last=0;setTimeout(check,500);});
+setInterval(function(){if(!document.hidden)check();},300000);
 window.RZUPD={news:news,bell:bell,check:function(){last=0;check();},ver:VER,notes:function(){var L=NOTES.slice(0,8);sheet("✨ Apa yang baru","Pembaharuan terkini",L,'<button class="go" data-u="close">Tutup</button>');}};
 })();
 
