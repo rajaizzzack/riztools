@@ -2985,7 +2985,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 /* ===== KEMAS KINI APP ===== */
 (function(){
 "use strict";
-var VER="2026111432",NOTES=[{"v":"2026111432","t":"Nama tool tetap & animasi nav Bajet","l":["Nama tool (Bajet Bulanan, Servis Kenderaan, Claim dan lain-lain) kini tetap, tiada butang ubah nama","Ikon Bajet di nav bawah ada animasi, dan butang aktif melantun bila ditekan"]}],last=0,shown=false,SK="rz_seenver",DK="rz_updskip";
+var VER="2026111434",NOTES=[{"v":"2026111434","t":"Install app terus di Android","l":["Di Android, butang Install keluar terus dan satu ketukan sudah memasang app","Tak perlu ikut langkah menu lagi"]}],last=0,shown=false,SK="rz_seenver",DK="rz_updskip";
 var ls={g:function(k){try{return localStorage.getItem(k);}catch(e){return null;}},s:function(k,v){try{localStorage.setItem(k,v);}catch(e){}}};
 try{if(location.search.indexOf("v=")>=0&&history.replaceState)history.replaceState(null,"",location.pathname+location.hash);}catch(e){}
 function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
@@ -2993,7 +2993,7 @@ function css(){
   if(document.getElementById("updCss"))return;
   var s=document.createElement("style");s.id="updCss";
   s.textContent="#updBar{position:fixed;left:10px;right:10px;top:calc(8px + env(safe-area-inset-top,0px));z-index:1500;display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:16px;background:var(--ac,#0f766e);color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.3);font:600 13px/1.3 system-ui,sans-serif;animation:updin .35s ease}#updBar span{flex:1;min-width:0}#updBar button{min-height:34px;padding:0 12px;border:0;border-radius:10px;background:#fff;color:#0f766e;font-weight:800;font-size:13px;cursor:pointer}#updBar .ul{background:rgba(255,255,255,.2);color:#fff}#updBar .ux{background:transparent;color:#fff;padding:0 6px;font-size:18px}@keyframes updin{from{transform:translateY(-20px);opacity:0}to{opacity:1}}"+
-  "#updSh{position:fixed;inset:0;z-index:1600;background:rgba(0,0,0,.45);display:flex;align-items:flex-end;justify-content:center}#updSh .p{width:100%;max-width:560px;max-height:82vh;overflow:auto;background:var(--card,#fff);color:var(--tx,#111);border-radius:22px 22px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));font:14px/1.45 system-ui,sans-serif}#updSh h2{margin:0 0 4px;font-size:18px}#updSh .rl{margin:14px 0 0;padding-top:12px;border-top:1px solid var(--bd,#ddd)}#updSh .rl b{display:block;font-size:14px}#updSh .rl small{opacity:.6}#updSh ul{margin:6px 0 0;padding-left:18px}#updSh li{margin:3px 0}#updSh .bt{display:flex;gap:8px;margin-top:16px}#updSh .bt button{flex:1;min-height:46px;border:0;border-radius:14px;font-weight:800;font-size:15px;cursor:pointer;background:var(--in,#eee);color:inherit}#updSh .bt .go{background:var(--ac,#0f766e);color:#fff}";
+  "#updSh{position:fixed;inset:0;z-index:1600;background:rgba(0,0,0,.5);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:18px;animation:ufade .25s ease both}#updSh .p{width:100%;max-width:420px;max-height:78vh;overflow:auto;background:var(--card,#fff);color:var(--tx,#111);border-radius:24px;padding:20px 18px 18px;box-shadow:0 20px 60px rgba(0,0,0,.35);font:14px/1.45 system-ui,sans-serif;animation:upop .45s cubic-bezier(.2,1.3,.4,1) both}#updSh h2 .bi{display:inline-block;transform-origin:50% 0;animation:ubell 1s ease .35s 2}@keyframes ufade{from{opacity:0}to{opacity:1}}@keyframes upop{0%{opacity:0;transform:scale(.82) translateY(18px)}100%{opacity:1;transform:none}}@keyframes ubell{0%,100%{transform:rotate(0)}15%{transform:rotate(22deg)}35%{transform:rotate(-18deg)}55%{transform:rotate(12deg)}75%{transform:rotate(-6deg)}}#updSh .rl{animation:uit .45s ease both}#updSh .rl:nth-of-type(2){animation-delay:.08s}#updSh .rl:nth-of-type(3){animation-delay:.16s}@keyframes uit{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}@media(prefers-reduced-motion:reduce){#updSh,#updSh *{animation:none!important}}#updSh h2{margin:0 0 4px;font-size:18px}#updSh .rl{margin:14px 0 0;padding-top:12px;border-top:1px solid var(--bd,#ddd)}#updSh .rl b{display:block;font-size:14px}#updSh .rl small{opacity:.6}#updSh ul{margin:6px 0 0;padding-left:18px}#updSh li{margin:3px 0}#updSh .bt{display:flex;gap:8px;margin-top:16px}#updSh .bt button{flex:1;min-height:46px;border:0;border-radius:14px;font-weight:800;font-size:15px;cursor:pointer;background:var(--in,#eee);color:inherit}#updSh .bt .go{background:var(--ac,#0f766e);color:#fff}";
   document.head.appendChild(s);
 }
 function since(a,b){return NOTES.slice(0,1);}
@@ -3056,7 +3056,7 @@ function bell(){
   h+='<div class="rl"><b>🔔 Peringatan</b>'+(R.length?R.map(function(r){var d=r.days,c=d==null?"Semak":d<0?"Lewat "+(-d)+" hari":d===0?"Hari ni":d+" hari";return '<div class="rr" data-act="open" data-t="'+esc(r.tool)+'"><span class="nm t">'+esc(r.t)+'</span><span style="font-weight:700;color:'+(d!=null&&d<0?"#dc2626":d!=null&&d<=(r.nb||14)?"#d97706":"inherit")+'">'+c+'</span></div>';}).join(""):'<div style="opacity:.65;padding:8px 0">Tiada yang dekat 👍</div>')+'</div>';
   css();var o=document.getElementById("updSh");if(o)o.remove();
   o=document.createElement("div");o.id="updSh";
-  o.innerHTML='<div class="p"><h2>🔔 Notifikasi</h2>'+h+'<div class="bt"><button class="go" data-u="close">Tutup</button></div></div>';
+  o.innerHTML='<div class="p"><h2><span class="bi">🔔</span> Notifikasi</h2>'+h+'<div class="bt"><button class="go" data-u="close">Tutup</button></div></div>';
   o.addEventListener("click",function(e){if(e.target===o||e.target.closest('[data-u="close"]')||e.target.closest("[data-act]"))setTimeout(function(){o.remove();},0);});
   document.body.appendChild(o);dot();
 }
@@ -3074,6 +3074,21 @@ window.addEventListener("online",function(){last=0;setTimeout(check,500);});
 setInterval(function(){if(!document.hidden)check();},300000);
 window.RZUPD={news:news,bell:bell,check:function(){last=0;check();},ver:VER,notes:function(){var L=NOTES.slice(0,8);sheet("✨ Apa yang baru","Pembaharuan terkini",L,'<button class="go" data-u="close">Tutup</button>');}};
 })();
+/* ---- Install app terus (Android / Chrome) ---- */
+(function(){
+var ev=null,orig=null;
+function bn(){var el=document.getElementById("instBn");if(!el)return;var b=el.querySelector("b"),m=el.querySelector(".mut"),p=el.querySelector(".pri");
+  if(ev){if(b)b.textContent="Install app RIZTOOLS";if(m)m.textContent="Satu ketukan, terus ada ikon macam app biasa.";if(p)p.textContent="Install";}}
+window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();ev=e;try{localStorage.removeItem("rz_inst_x");}catch(er){}bn();try{if(typeof instBn==="function")instBn();}catch(er){}bn();});
+window.addEventListener("appinstalled",function(){ev=null;try{localStorage.setItem("rz_inst_x","1");}catch(er){}try{if(typeof instBn==="function")instBn();}catch(er){}});
+function hook(){if(typeof window.installSheet!=="function"||window.installSheet.__w)return;orig=window.installSheet;
+  var w=function(tab){if(ev){var e=ev;ev=null;try{e.prompt();e.userChoice.then(function(c){if(c&&c.outcome!=="accepted"){/* batal: benarkan cuba lagi dengan cara manual */}});}catch(er){return orig(tab);}return;}return orig(tab);};
+  w.__w=1;window.installSheet=w;}
+hook();setTimeout(hook,1500);
+document.addEventListener("click",function(e){if(e.target.closest("[data-act=inst],[data-z=inst]"))hook();},true);
+var iv=setInterval(bn,2000);setTimeout(function(){clearInterval(iv);},20000);
+})();
+
 /* ---- Hari ni & Profil sebagai halaman ---- */
 (function(){
 var NV={nav_today:1,nav_profile:1};
