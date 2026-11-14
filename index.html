@@ -548,6 +548,7 @@ function sheet(html) {
   ov.innerHTML = '<div class="rbox" style="border-radius:20px 20px 16px 16px">' + html + '</div>'; document.body.appendChild(ov);
   ov.addEventListener("click", e => { if (e.target === ov || e.target.closest("[data-x]")) ov.remove(); }); return ov;
 }
+const pgSheet = h => { const o = sheet(h); o.classList.add("pg"); o.style.alignItems = ""; const b = o.firstElementChild; if (b) b.style.borderRadius = ""; return o; };
 const shHead = t => '<div class="grab"></div><div class="phd"><h2>' + t + '</h2><button class="pri" data-x="1" aria-label="Tutup">✕ Tutup</button></div>';
 const isStd = () => (window.matchMedia && matchMedia("(display-mode: standalone)").matches) || navigator.standalone === true;
 function instBn() { const el = document.getElementById("instBn"); if (!el) return; let x = ""; try { x = localStorage.getItem("rz_inst_x") || ""; } catch (e) {} el.hidden = isStd() || !!x; }
@@ -569,7 +570,7 @@ function todaySheet() {
   const rem = R.map(r => row(r.tool, `<span class="zb ${r.days < 0 ? "bad" : r.days <= r.nb ? "w" : "ok"}">${r.d ? zlbl(r.days) : "Semak"}</span>`, esc(r.t))).join("") || '<div class="mut">Tiada yang dekat 👍</div>';
   const G = Z.syncH ? zHutG().map(g => { const L = g.L.filter(h => zRemain(h) > .004 && (h.ym || cm) <= cm); return { n: g.name, a: r2(L.reduce((x, h) => x + zRemain(h), 0)) }; }).filter(g => g.a > .004) : [];
   const hut = G.map(g => row("hut", '<span class="ic" style="background:var(--in)">🤝</span>', esc(g.n), `<b style="color:var(--ok)">${fmt(g.a)}</b>`)).join("") || '<div class="mut">Tiada hutang untuk dikutip bulan ni.</div>';
-  sheet(shHead("Hari ni") + `<div class="mut" style="margin-bottom:8px">${esc(dFmt(today()))}</div>
+  pgSheet(shHead("Hari ni") + `<div class="mut" style="margin-bottom:8px">${esc(dFmt(today()))}</div>
     <div class="card tdy"><div class="sum"><div><div class="mut">Baki bajet</div><b class="owe ${c.inc > 0 && baki < 0 ? "b" : "z"}">${c.inc > 0 ? fmt(baki) : "-"}</b></div><div><div class="mut">Belanja bulan ni</div><b>${fmt(c.bel)}</b></div></div>
     ${c.inc > 0 ? "" : '<div class="mut" style="margin-top:6px">Isi pendapatan di Bajet untuk nampak baki.</div>'}</div>
     <h3>🔔 Peringatan</h3><div class="card">${rem}</div>
@@ -1884,6 +1885,15 @@ details.kd>summary{cursor:pointer;list-style:none;min-height:40px;display:flex;a
 .localbn,.instbn{padding:7px 10px !important;margin-bottom:8px !important}.instbn .instic{font-size:20px}.instbn .pri{min-height:34px !important}
 #bellBtn{position:relative;min-width:44px;font-size:18px}#bellBtn .bdot{position:absolute;top:6px;right:8px;width:9px;height:9px;border-radius:50%;background:#ef4444;border:2px solid var(--card,#fff);box-sizing:content-box}#bellBtn .bdot[hidden]{display:none}#bellBtn.ring span{animation:bring .7s ease 2}@keyframes bring{0%,100%{transform:rotate(0)}20%{transform:rotate(18deg)}40%{transform:rotate(-16deg)}60%{transform:rotate(10deg)}80%{transform:rotate(-6deg)}}#updSh .rr{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--bd,#ddd);cursor:pointer}#updSh .rr .t{flex:1}
 .vtag{display:none;position:absolute;left:1px;top:100%;margin-top:-1px;padding:0;border:0;background:none;color:var(--mut,#777);font:600 10.5px/1.2 system-ui,sans-serif;letter-spacing:.02em;cursor:pointer;min-height:0;min-width:0;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}body:has(#home:not([hidden])) .vtag{display:block}body:has(#home:not([hidden])) .top{margin-bottom:22px}
+.rov.pg,#rzPanel.pg{z-index:55!important}
+.rov.pg{background:var(--bg);padding:0;pointer-events:none;align-items:stretch!important;justify-content:center;z-index:55;animation:pgin .3s cubic-bezier(.2,.8,.2,1) both}
+.rov.pg>.rbox,.rov.pg>.rzbox{max-width:760px!important;width:100%;height:calc(100% - 92px - env(safe-area-inset-bottom,0px));max-height:none!important;border-radius:0!important;box-shadow:none;background:transparent;padding:calc(14px + env(safe-area-inset-top,0px)) 16px 24px;animation:none!important;overflow-y:auto}
+.rov.pg>*{pointer-events:auto}.rov.pg .grab{display:none}.rov.pg .phd{position:sticky;top:calc(-14px - env(safe-area-inset-top,0px));z-index:3;background:var(--bg);padding:8px 0;margin:0 0 8px}
+.rov.pg>.rbox>*,.rov.pg>.rzbox>*{animation:pgit .4s cubic-bezier(.2,.8,.2,1) both}.rov.pg>.rbox>*:nth-child(2),.rov.pg>.rzbox>*:nth-child(2){animation-delay:.04s}.rov.pg>.rbox>*:nth-child(3),.rov.pg>.rzbox>*:nth-child(3){animation-delay:.08s}.rov.pg>.rbox>*:nth-child(n+4),.rov.pg>.rzbox>*:nth-child(n+4){animation-delay:.12s}
+@keyframes pgin{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:none}}@keyframes pgit{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.rov.pg,.rov.pg *{animation:none!important}}
+#nav button.pgon{background:var(--in);border-radius:16px}
+body:has(.rov.pg) #nav button.on:not(.pgon){background:transparent!important;box-shadow:none!important;color:var(--mut)!important}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .pbar{height:10px;border-radius:6px;background:var(--in);overflow:hidden;margin:8px 0 2px}.pbar i{display:block;height:100%;background:var(--ac);border-radius:6px;transition:width .5s}
 .gbtn{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:12px;background:var(--in);cursor:pointer;font-weight:600}
@@ -2665,7 +2675,7 @@ function boot() {
 /* ================= PANEL AKAUN ================= */
 function panel(msg, good) {
   let ov = $("rzPanel");
-  if (!ov) { ov = document.createElement("div"); ov.className = "rov"; ov.id = "rzPanel"; AVDR = null; AVM = ""; PSEC = {}; document.body.appendChild(ov); ov.addEventListener("click", onClick);
+  if (!ov) { ov = document.createElement("div"); ov.className = "rov pg"; ov.id = "rzPanel"; AVDR = null; AVM = ""; PSEC = {}; document.body.appendChild(ov); ov.addEventListener("click", onClick);
     ov.addEventListener("toggle", e => { const d = e.target; if (d && d.dataset && d.dataset.s) PSEC[d.dataset.s] = d.open; }, true);
     ov.addEventListener("change", async e => { if (e.target.id !== "avF" || !e.target.files[0]) return; try { const d = await avCrop(e.target.files[0]); e.target.value = ""; if (!d) return; AVDR = { t: "img", d }; AVM = ""; panel(); } catch (er) { panel("Gambar tak dapat dibaca. Cuba gambar lain."); } }); }
   const me = cur(); if (!me) return logout();
@@ -2968,7 +2978,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 /* ===== KEMAS KINI APP ===== */
 (function(){
 "use strict";
-var VER="2026111429",NOTES=[{"v":"2026111429","t":"Semakan update lebih pantas di iPhone","l":["App semak versi baru setiap kali dibuka semula dari latar belakang","Tak perlu tutup dan buka app lagi untuk nampak notis kemas kini"]}],last=0,shown=false,SK="rz_seenver",DK="rz_updskip";
+var VER="2026111430",NOTES=[{"v":"2026111430","t":"Hari ni & Profil jadi halaman penuh","l":["Tak lagi muncul terapung, kini buka sebagai halaman sendiri dengan animasi gelongsor","Nav bawah kekal nampak dan menunjuk halaman yang sedang dibuka"]}],last=0,shown=false,SK="rz_seenver",DK="rz_updskip";
 var ls={g:function(k){try{return localStorage.getItem(k);}catch(e){return null;}},s:function(k,v){try{localStorage.setItem(k,v);}catch(e){}}};
 try{if(location.search.indexOf("v=")>=0&&history.replaceState)history.replaceState(null,"",location.pathname+location.hash);}catch(e){}
 function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
@@ -3055,6 +3065,14 @@ window.addEventListener("online",function(){last=0;setTimeout(check,500);});
 setInterval(function(){if(!document.hidden)check();},300000);
 window.RZUPD={news:news,bell:bell,check:function(){last=0;check();},ver:VER,notes:function(){var L=NOTES.slice(0,8);sheet("✨ Apa yang baru","Pembaharuan terkini",L,'<button class="go" data-u="close">Tutup</button>');}};
 })();
+/* ---- Hari ni & Profil sebagai halaman ---- */
+(function(){
+var NV={nav_today:1,nav_profile:1};
+function mark(){var o=document.querySelector(".rov.pg"),t=o?(o.id==="rzPanel"?"nav_profile":"nav_today"):"";document.querySelectorAll("#nav button").forEach(function(b){b.classList.toggle("pgon",!!t&&b.dataset.act===t);if(t&&b.classList.contains("on")&&b.dataset.act!==t)b.dataset.was="1";});}
+new MutationObserver(function(m){var any=m.some(function(r){return[].some.call(r.addedNodes,function(n){return n.classList&&n.classList.contains("pg");})||[].some.call(r.removedNodes,function(n){return n.classList&&n.classList.contains("pg");});});if(any)mark();}).observe(document.body,{childList:true});
+document.addEventListener("click",function(e){var b=e.target.closest("#nav button");if(!b)return;var o=document.querySelector(".rov.pg");if(!o)return;var same=(o.id==="rzPanel"&&b.dataset.act==="nav_profile")||(o.id!=="rzPanel"&&b.dataset.act==="nav_today");o.remove();mark();if(same){e.stopImmediatePropagation();e.preventDefault();}},true);
+})();
+
 
 
 
