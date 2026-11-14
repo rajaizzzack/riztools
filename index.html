@@ -2964,25 +2964,43 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 /* ===== KEMAS KINI APP ===== */
 (function(){
 "use strict";
-var VER="2026111422",last=0,shown=false;
+var VER="2026111423",NOTES=[{"v":"2026111423","t":"Notis kemas kini lebih kemas","l":["Cuma satu notis walaupun dah lama tak buka app, semua pembaharuan digabung","Boleh baca apa yang baru sebelum kemas kini","Lepas kemas kini, ada ringkasan apa yang berubah","Tekan ✕ dan notis tak ganggu lagi sehari"]},{"v":"2026111422","t":"Road tax & insurans masuk bajet","l":["Butang baru 📄 Dah renew road tax dalam Servis Kenderaan","Kos renew dikira dalam Bajet Bulanan dan tarikh tamat dilanjut setahun","Butang 🛢️ Dah tukar minyak guna borang yang sama"]},{"v":"2026111421","t":"Bajet Bulanan diasingkan ikut kumpulan","l":["💸 Perbelanjaan, 🎯 Simpanan dan 💰 Pendapatan tambahan","Sasaran Simpanan, OT dan Invois dibayar kini sync ke bajet","Setiap kumpulan ada jumlah sendiri, tick untuk masuk atau keluar kira"]},{"v":"2026111420","t":"Servis Kenderaan lebih kemas","l":["Satu kad setiap kenderaan dengan status minyak dan road tax","Borang servis dengan tarikh, odometer dan kos","Rekod servis dikumpul ikut bulan","Kos servis dan minyak masuk Bajet Bulanan"]},{"v":"2026111419","t":"Sejarah harian, mingguan, bulanan","l":["Lihat Pendapatan dan Belanja ikut hari, minggu atau bulan","Boleh semak minggu lepas dengan mudah"]},{"v":"2026111418","t":"Untuk yang tiada gaji tetap","l":["Tool baru 💵 Pendapatan untuk rider, kerja sendiri dan suri rumah","Kad Hari ni di halaman utama tunjuk belanja dan pendapatan harini"]},{"v":"2026111417","t":"Pasang di Android skrin penuh","l":["Boleh dipasang macam app penuh di Android"]},{"v":"2026111416","t":"Butang ＋ boleh diubah","l":["Pilih 3 pintasan pantas sendiri, ✏️ untuk ubah","Leret terus ke pensel untuk edit","Paparan PC dibaiki"]},{"v":"2026111415","t":"9 tool baru + pilih tool sendiri","l":["Simpanan, Split Bill, Kalkulator, Invois, Log Minyak, Waranti, Tarikh Penting, Nota dan OT & Cuti","➕ Tambah tool: pilih tool yang nak ditunjuk sahaja"]}],last=0,shown=false,SK="rz_seenver",DK="rz_updskip";
+var ls={g:function(k){try{return localStorage.getItem(k);}catch(e){return null;}},s:function(k,v){try{localStorage.setItem(k,v);}catch(e){}}};
 try{if(location.search.indexOf("v=")>=0&&history.replaceState)history.replaceState(null,"",location.pathname+location.hash);}catch(e){}
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
 function css(){
   if(document.getElementById("updCss"))return;
   var s=document.createElement("style");s.id="updCss";
-  s.textContent="#updBar{position:fixed;left:10px;right:10px;top:calc(8px + env(safe-area-inset-top,0px));z-index:1500;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;background:var(--ac,#0f766e);color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.3);font:600 13px/1.3 system-ui,sans-serif;animation:updin .35s ease}#updBar span{flex:1;min-width:0}#updBar button{min-height:34px;padding:0 12px;border:0;border-radius:10px;background:#fff;color:#0f766e;font-weight:800;font-size:13px;cursor:pointer}#updBar .ux{background:transparent;color:#fff;padding:0 6px;font-size:18px}@keyframes updin{from{transform:translateY(-20px);opacity:0}to{opacity:1}}";
+  s.textContent="#updBar{position:fixed;left:10px;right:10px;top:calc(8px + env(safe-area-inset-top,0px));z-index:1500;display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:16px;background:var(--ac,#0f766e);color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.3);font:600 13px/1.3 system-ui,sans-serif;animation:updin .35s ease}#updBar span{flex:1;min-width:0}#updBar button{min-height:34px;padding:0 12px;border:0;border-radius:10px;background:#fff;color:#0f766e;font-weight:800;font-size:13px;cursor:pointer}#updBar .ul{background:rgba(255,255,255,.2);color:#fff}#updBar .ux{background:transparent;color:#fff;padding:0 6px;font-size:18px}@keyframes updin{from{transform:translateY(-20px);opacity:0}to{opacity:1}}"+
+  "#updSh{position:fixed;inset:0;z-index:1600;background:rgba(0,0,0,.45);display:flex;align-items:flex-end;justify-content:center}#updSh .p{width:100%;max-width:560px;max-height:82vh;overflow:auto;background:var(--card,#fff);color:var(--tx,#111);border-radius:22px 22px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));font:14px/1.45 system-ui,sans-serif}#updSh h2{margin:0 0 4px;font-size:18px}#updSh .rl{margin:14px 0 0;padding-top:12px;border-top:1px solid var(--bd,#ddd)}#updSh .rl b{display:block;font-size:14px}#updSh .rl small{opacity:.6}#updSh ul{margin:6px 0 0;padding-left:18px}#updSh li{margin:3px 0}#updSh .bt{display:flex;gap:8px;margin-top:16px}#updSh .bt button{flex:1;min-height:46px;border:0;border-radius:14px;font-weight:800;font-size:15px;cursor:pointer;background:var(--in,#eee);color:inherit}#updSh .bt .go{background:var(--ac,#0f766e);color:#fff}";
   document.head.appendChild(s);
 }
-function show(v){
-  if(shown)return;shown=true;css();
+function since(a,b){return NOTES.filter(function(n){return Number(n.v)>Number(a)&&(!b||Number(n.v)<=Number(b));}).sort(function(x,y){return Number(y.v)-Number(x.v);});}
+function sheet(title,sub,list,btns){
+  css();var o=document.getElementById("updSh");if(o)o.remove();
+  o=document.createElement("div");o.id="updSh";
+  o.innerHTML='<div class="p"><h2>'+esc(title)+'</h2><div style="opacity:.65">'+esc(sub)+'</div>'+list.map(function(n){return '<div class="rl"><b>'+esc(n.t)+'</b><ul>'+(n.l||[]).map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul></div>';}).join("")+'<div class="bt">'+btns+'</div></div>';
+  o.addEventListener("click",function(e){if(e.target===o||e.target.closest('[data-u="close"]'))o.remove();});
+  document.body.appendChild(o);return o;
+}
+function go(v,btn){
+  if(btn)btn.textContent="...";
+  try{if("caches" in window)caches.keys().then(function(ks){ks.forEach(function(k){caches.delete(k);});});}catch(er){}
+  setTimeout(function(){location.replace(location.pathname+"?v="+encodeURIComponent(v));},150);
+}
+function show(v,remote){
+  if(shown)return;
+  var sk=ls.g(DK);if(sk){var p=sk.split("|");if(p[0]===String(v)&&Date.now()-Number(p[1])<86400000)return;}
+  shown=true;css();
+  var L=remote&&remote.length?remote.filter(function(n){return Number(n.v)>Number(VER);}).sort(function(x,y){return Number(y.v)-Number(x.v);}):[];
   try{if(window.sfx)sfx("fan");}catch(e){}
   var d=document.createElement("div");d.id="updBar";d.setAttribute("role","status");
-  d.innerHTML='<span>🔔 Ada versi baru RIZTOOLS</span><button data-u="go">Kemas kini</button><button class="ux" data-u="x" aria-label="Tutup">✕</button>';
+  d.innerHTML='<span>🔔 Ada versi baru'+(L.length>1?' ('+L.length+' pembaharuan)':'')+'</span>'+(L.length?'<button class="ul" data-u="info">Apa baru?</button>':'')+'<button data-u="go">Kemas kini</button><button class="ux" data-u="x" aria-label="Tutup">✕</button>';
   d.addEventListener("click",function(e){
-    var b=e.target.closest("[data-u]");if(!b)return;
-    if(b.getAttribute("data-u")==="x"){d.remove();return;}
-    b.textContent="...";
-    try{if("caches" in window)caches.keys().then(function(ks){ks.forEach(function(k){caches.delete(k);});});}catch(er){}
-    setTimeout(function(){location.replace(location.pathname+"?v="+encodeURIComponent(v));},150);
+    var b=e.target.closest("[data-u]");if(!b)return;var k=b.getAttribute("data-u");
+    if(k==="x"){ls.s(DK,v+"|"+Date.now());d.remove();return;}
+    if(k==="info"){var o=sheet("✨ Apa yang baru","Semua pembaharuan sejak versi anda",L,'<button data-u="close">Nanti</button><button class="go" data-u="go2">Kemas kini sekarang</button>');o.addEventListener("click",function(ev){var g=ev.target.closest('[data-u="go2"]');if(g)go(v,g);});return;}
+    go(v,b);
   });
   document.body.appendChild(d);
 }
@@ -2991,14 +3009,22 @@ function check(){
   if(location.protocol==="file:")return;
   try{
     fetch("version.json?t="+now,{cache:"no-store"}).then(function(r){return r.ok?r.json():null;}).then(function(j){
-      if(j&&j.v&&Number(j.v)>Number(VER))show(j.v);
+      if(j&&j.v&&Number(j.v)>Number(VER))show(j.v,j.notes);
     }).catch(function(){});
   }catch(e){}
 }
-setTimeout(check,3000);
+/* lepas kemas kini: tunjuk ringkasan sekali sahaja */
+function after(){
+  var seen=ls.g(SK);ls.s(SK,VER);
+  if(!seen||Number(seen)>=Number(VER))return;
+  var L=since(seen,VER);if(!L.length)return;
+  setTimeout(function(){sheet("✨ Baru dikemas kini","Ini yang berubah sejak kali terakhir anda buka",L,'<button class="go" data-u="close">Okay, faham</button>');},1800);
+}
+setTimeout(check,3000);setTimeout(after,600);
 document.addEventListener("visibilitychange",function(){if(!document.hidden)setTimeout(check,800);});
-window.RZUPD={check:function(){last=0;check();},ver:VER};
+window.RZUPD={check:function(){last=0;check();},ver:VER,notes:function(){var L=NOTES.slice(0,8);sheet("✨ Apa yang baru","Pembaharuan terkini",L,'<button class="go" data-u="close">Tutup</button>');}};
 })();
+
 
 </script>
 <script>
