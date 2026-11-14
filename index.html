@@ -1902,6 +1902,7 @@ body:has(.rov.pg) #nav button.on:not(.pgon){background:transparent!important;box
 @keyframes navbars{0%,70%,100%{transform:scaleY(1)}78%{transform:scaleY(1.28) translateY(-1px)}86%{transform:scaleY(.86)}93%{transform:scaleY(1.1)}}
 @media(prefers-reduced-motion:reduce){#nav button b{animation:none!important}}
 #backBtn{display:none!important}
+#shareFab{left:auto!important;right:14px}@media(min-width:900px){#shareFab{right:max(16px,calc(50% - 560px))!important}}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .pbar{height:10px;border-radius:6px;background:var(--in);overflow:hidden;margin:8px 0 2px}.pbar i{display:block;height:100%;background:var(--ac);border-radius:6px;transition:width .5s}
 .gbtn{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:12px;background:var(--in);cursor:pointer;font-weight:600}
@@ -2986,7 +2987,7 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 /* ===== KEMAS KINI APP ===== */
 (function(){
 "use strict";
-var VER="2026111435",NOTES=[{"v":"2026111435","t":"Bar atas lebih ringkas","l":["Butang ← Menu di atas dibuang, guna Menu di nav bawah"]}],last=0,shown=false,SK="rz_seenver",DK="rz_updskip";
+var VER="2026111436",NOTES=[{"v":"2026111436","t":"Butang kongsi di kanan bawah","l":["Butang kongsi dipindah ke sudut kanan bawah"]}],last=0,shown=false,SK="rz_seenver",DK="rz_updskip";
 var ls={g:function(k){try{return localStorage.getItem(k);}catch(e){return null;}},s:function(k,v){try{localStorage.setItem(k,v);}catch(e){}}};
 try{if(location.search.indexOf("v=")>=0&&history.replaceState)history.replaceState(null,"",location.pathname+location.hash);}catch(e){}
 function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
