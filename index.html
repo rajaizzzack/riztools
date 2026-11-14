@@ -3042,7 +3042,7 @@ function bell(){
   document.body.appendChild(o);dot();
 }
 document.addEventListener("click",function(e){var t=e.target.closest('[data-act="bell"]');if(!t)return;e.stopImmediatePropagation();e.preventDefault();try{if(window.sfx)sfx("tick");}catch(er){}bell();},true);
-function vtag(){var e=document.getElementById("verTag");if(!e)return;var M=["Jan","Feb","Mac","Apr","Mei","Jun","Jul","Ogos","Sep","Okt","Nov","Dis"],v=String(VER),n=Number(v.slice(8));e.textContent="✨ RIZTOOLS v1."+n+" · Build "+v.slice(0,4)+"."+v.slice(4,6)+"."+v.slice(6,8)+"-"+v.slice(8)+" · Dikemas kini "+Number(v.slice(6,8))+" "+M[Number(v.slice(4,6))-1]+" "+v.slice(0,4);}
+function vtag(){var e=document.getElementById("verTag");if(!e)return;var M=["Jan","Feb","Mac","Apr","Mei","Jun","Jul","Ogos","Sep","Okt","Nov","Dis"],v=String(VER),n=Number(v.slice(8));e.textContent="✨ Versi 1."+n+" · Build "+v.slice(0,4)+"."+v.slice(4,6)+"."+v.slice(6,8)+"-"+v.slice(8)+" · "+Number(v.slice(6,8))+" "+M[Number(v.slice(4,6))-1]+" "+v.slice(0,4);}
 function news(){dot();vtag();}
 news();
 setInterval(dot,5000);setTimeout(dot,2500);setTimeout(check,3000);setTimeout(after,600);
